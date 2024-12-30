@@ -12,7 +12,6 @@ class FunctionController extends Controller
     public function __construct(DownloadFlickrService $downloadFlickrService)
     {
         $this->downloadFlickrService = $downloadFlickrService;
-
     }
     public function indexFlickr(){
         return view('flickr_download');
@@ -35,4 +34,9 @@ class FunctionController extends Controller
 
         return view('flickr_download', ['photoSizes' => $photoSizes]);
     }
+
+    public function filterPhone(){
+        return view('filter_phone');
+    }
+
 }
