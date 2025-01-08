@@ -15,3 +15,4 @@ Route::get('/filter-phone',[FunctionController::class,'filterPhone'])->name('fil
 Route::get('/test', function () {
     dd(env('FLICK_API_KEY'));
 });
+
