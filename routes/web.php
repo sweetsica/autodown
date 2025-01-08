@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FunctionController;
-use App\Http\Controllers\TelegramBotController;
+use App\Http\Controllers\TelegramController;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 
@@ -19,7 +19,7 @@ Route::get('/test', function () {
     dd(env('FLICK_API_KEY'));
 });
 
-Route::post('/telegram/webhook', [TelegramBotController::class, 'webhook'])->name('telegram.webhook');
+Route::post('/telegram/webhook', [TelegramController::class, 'webhook'])->name('telegram.webhook');
 
 
 Route::get('/set-telegram-webhook', function () {
