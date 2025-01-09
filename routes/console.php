@@ -10,7 +10,7 @@ Artisan::command('inspire', function () {
 
 
 Artisan::command('telegram:set-webhook', function () {
-    Telegram::setWebhook(['url' => 'https://lara-autodown.test:82/telegram/webhook']);
+    Telegram::setWebhook(['url' => 'https://autodown.sweetsica.com/telegram/webhook']);
     $this->comment('Webhook set successfully!');
 });
 
