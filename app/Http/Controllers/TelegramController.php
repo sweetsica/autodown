@@ -3,40 +3,55 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use Telegram\Bot\Objects\Message;
+use App\Services\DownloadTikTokService;
 
 class TelegramController extends Controller
 {
+    protected $downloadTikTokService;
+
+    // Inject service vào controller
+    public function __construct(DownloadTikTokService $downloadTikTokService)
+    {
+        $this->downloadTikTokService = $downloadTikTokService;
+    }
+
+    // Webhook handler
     public function webhook(Request $request)
     {
-        try {
-            // Lấy tất cả cập nhật từ Telegram
-            $updates = Telegram::getWebhookUpdates();
+        // Lấy thông tin tin nhắn từ Telegram
+        $updates = Telegram::getWebhookUpdates();
 
-            // Kiểm tra xem cập nhật có chứa tin nhắn không
-            if ($updates && $updates->has('message')) {
-                $message = $updates->get('message');
+        // Kiểm tra xem có tin nhắn hay không
+        if ($updates->has('message')) {
+            $message = $updates->getMessage();
+            $chatId = $message->getChat()->getId();
+            $text = $message->getText(); // Lấy nội dung tin nhắn từ người dùng
 
-                // Kiểm tra và xử lý tin nhắn
-                if ($message instanceof Message) {
-                    $chatId = $message->getChat()->getId();  // Lấy ID của người chat
-                    $text = $message->getText();  // Lấy nội dung tin nhắn
+            // Xử lý tin nhắn
+            if (filter_var($text, FILTER_VALIDATE_URL)) {
+                // Gọi service để tải video TikTok
+                $result = $this->downloadTikTokService->getVideoDownloadLink($text);
 
-                    // Gửi lại tin nhắn cho người dùng
-                    Telegram::sendMessage([
+                if ($result['success']) {
+                    // Gửi lại video nếu tải thành công
+                    Telegram::sendVideo([
                         'chat_id' => $chatId,
-                        'text' => 'Bạn đã gửi: ' . $text,
+                        'video' => $result['download_url'],
                     ]);
                 } else {
-                    // Nếu không phải tin nhắn, log lỗi
-                    \Log::error('Không phải tin nhắn: ' . print_r($updates, true));
+                    Telegram::sendMessage([
+                        'chat_id' => $chatId,
+                        'text' => 'Không thể tải video từ URL bạn cung cấp.',
+                    ]);
                 }
+            } else {
+                Telegram::sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => 'Vui lòng gửi một URL video TikTok hợp lệ.',
+                ]);
             }
-
-            return response('OK', 200);
-        } catch (\Exception $e) {
-            \Log::error('Telegram webhook error: ' . $e->getMessage());
-            return response('Error', 500);
         }
+
+        return response('OK', 200); // Trả về OK cho Telegram
     }
 }
