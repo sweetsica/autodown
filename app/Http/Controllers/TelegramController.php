@@ -7,42 +7,24 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 class TelegramController extends Controller
 {
-    // Nhận tin nhắn từ bot và phản hồi lại
     public function webhook(Request $request)
     {
-        // Nhận dữ liệu từ webhook
-        $update = Telegram::getWebhookUpdates();
-        $chatId = $update->getMessage()->getChat()->getId();
-        $text = $update->getMessage()->getText();
+        try {
+            $updates = Telegram::getWebhookUpdates();
 
-        // Xử lý tin nhắn
-        if (strtolower($text) == 'hello') {
+            $chatId = $updates->getMessage()->getChat()->getId();
+            $text = $updates->getMessage()->getText();
+
+            // Gửi lại tin nhắn
             Telegram::sendMessage([
                 'chat_id' => $chatId,
-                'text' => 'Hello! How can I help you?',
+                'text' => 'Bạn đã gửi: ' . $text,
             ]);
-        } else {
-            Telegram::sendMessage([
-                'chat_id' => $chatId,
-                'text' => 'I received your message: ' . $text,
-            ]);
+
+            return response('OK', 200);
+        } catch (\Exception $e) {
+            \Log::error('Telegram webhook error: ' . $e->getMessage());
+            return response('Error', 500);
         }
-
-        return response('OK', 200);
-    }
-
-    // Gửi tin nhắn tới bot qua API (gửi qua web)
-    public function sendMessage(Request $request)
-    {
-        $chatId = $request->input('chat_id');
-        $message = $request->input('message');
-
-        // Gửi tin nhắn đến Telegram bot
-        Telegram::sendMessage([
-            'chat_id' => $chatId,
-            'text' => $message,
-        ]);
-
-        return response()->json(['status' => 'Message sent']);
     }
 }
