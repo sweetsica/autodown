@@ -30,7 +30,7 @@ class TelegramController extends Controller
 
             // Gửi phản hồi lại cho người dùng qua Telegram API
             $client = new \GuzzleHttp\Client();
-            $response = $client->post("https://api.telegram.org/bot{TOKEN}/sendMessage", [
+            $response = $client->post("https://api.telegram.org/bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w/sendMessage", [
                 'json' => [
                     'chat_id' => $chatId,
                     'text' => 'da-nhan-tin',
