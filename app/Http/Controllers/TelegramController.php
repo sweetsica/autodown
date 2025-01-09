@@ -29,11 +29,14 @@ class TelegramController extends Controller
             $responseText = 'da-nhan-tin';
 
             // Gửi phản hồi lại cho người dùng qua Telegram API
-            Telegram::sendMessage([
-                'chat_id' => $chatId,
-                'text' => $responseText,
-                'parse_mode' => 'MarkdownV2',
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post("https://api.telegram.org/bot{TOKEN}/sendMessage", [
+                'json' => [
+                    'chat_id' => $chatId,
+                    'text' => 'da-nhan-tin',
+                ]
             ]);
+
         }
 
         return response('OK', 200); // Trả về OK cho Telegram
