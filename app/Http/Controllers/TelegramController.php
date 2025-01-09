@@ -18,38 +18,22 @@ class TelegramController extends Controller
     // Webhook handler
     public function webhook(Request $request)
     {
-        // Lấy thông tin tin nhắn từ Telegram
         $updates = Telegram::getWebhookUpdates();
 
-        // Kiểm tra xem có tin nhắn hay không
         if ($updates->has('message')) {
-            $message = $updates->getMessage();
-            $chatId = $message->getChat()->getId();
-            $text = $message->getText(); // Lấy nội dung tin nhắn từ người dùng
+            // Lấy chat_id và nội dung tin nhắn
+            $chatId = $updates->getMessage()->getChat()->getId();
+            $text = $updates->getMessage()->getText();
 
-            // Xử lý tin nhắn
-            if (filter_var($text, FILTER_VALIDATE_URL)) {
-                // Gọi service để tải video TikTok
-                $result = $this->downloadTikTokService->getVideoDownloadLink($text);
+            // Tạo tin nhắn phản hồi
+            $responseText = 'da-nhan-tin';
 
-                if ($result['success']) {
-                    // Gửi lại video nếu tải thành công
-                    Telegram::sendVideo([
-                        'chat_id' => $chatId,
-                        'video' => $result['download_url'],
-                    ]);
-                } else {
-                    Telegram::sendMessage([
-                        'chat_id' => $chatId,
-                        'text' => 'Không thể tải video từ URL bạn cung cấp.',
-                    ]);
-                }
-            } else {
-                Telegram::sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => 'Vui lòng gửi một URL video TikTok hợp lệ.',
-                ]);
-            }
+            // Gửi phản hồi lại cho người dùng qua Telegram API
+            Telegram::sendMessage([
+                'chat_id' => $chatId,
+                'text' => $responseText,
+                'parse_mode' => 'MarkdownV2',
+            ]);
         }
 
         return response('OK', 200); // Trả về OK cho Telegram
