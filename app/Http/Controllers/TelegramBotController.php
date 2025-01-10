@@ -3,27 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Westacks\TeleBot\Bot\BotEvent;
+// use Westacks\TeleBot\Bot\BotEvent;
 use Westacks\TeleBot\Bot\TeleBot;
 
 class TelegramBotController extends Controller
 {
-    protected $teleBot;
-
-    public function __construct(TeleBot $teleBot)
-    {
-        $this->teleBot = $teleBot;
-    }
 
     // Gửi tin nhắn "xin chào"
     public function sendHelloMessage(Request $request)
     {
-        $chatId = $request->input('chat_id'); // Nhận chat_id từ request
-        $message = "Xin chào!";
+        $bot = new TeleBot(env('TELEGRAM_BOT_TOKEN'));
 
-        $this->teleBot->sendMessage($chatId, $message);
-
-        return response()->json(['status' => 'success', 'message' => 'Message sent']);
+        // See docs for details:  https://core.telegram.org/bots/api#sendmessage
+        $message = $bot->sendMessage([
+            'chat_id' => 1234567890,
+            'text' => 'Test message',
+            'reply_markup' => [
+                'inline_keyboard' => [[[
+                    'text' => 'Google',
+                    'url' => 'https://google.com/'
+                ]]]
+            ]
+        ]);
     }
 
     // Xử lý tin nhắn từ webhook
