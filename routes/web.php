@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FunctionController;
-use App\Http\Controllers\TelegramBotController;
+use App\Http\Controllers\TelegramController;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use App\Http\Controllers\TelegramBotController;
+
 
 
 Route::get('/', function () {
@@ -19,7 +21,7 @@ Route::get('/test', function () {
     dd(env('FLICK_API_KEY'));
 });
 
-Route::post('/telegram/webhook', [TelegramBotController::class, 'webhook']);
+// Route::post('/telegram/webhook', [TelegramController::class, 'webhook']);
 
 Route::get('/set-webhook', function () {
     $response = Telegram::setWebhook(['url' => 'https://lara-autodown.test/telegram/webhook']); // URL hợp lệ
@@ -29,3 +31,6 @@ Route::get('/delete-webhook', function () {
     $response = Telegram::deleteWebhook();
     return response()->json($response);
 });
+
+Route::post('/telebot/send-hello', [TelegramBotController::class, 'sendHelloMessage']);
+Route::post('/telebot/webhook', [TelegramBotController::class, 'handleWebhook']);
