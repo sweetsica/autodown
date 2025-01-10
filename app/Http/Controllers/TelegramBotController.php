@@ -16,7 +16,7 @@ class TelegramBotController extends Controller
 
         // See docs for details:  https://core.telegram.org/bots/api#sendmessage
         $message = $bot->sendMessage([
-            'chat_id' => 1234567890,
+            'chat_id' => 5047537302,
             'text' => 'Test message',
             'reply_markup' => [
                 'inline_keyboard' => [[[
