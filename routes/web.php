@@ -44,4 +44,4 @@ Route::get('sendContact', [App\Http\Controllers\TelegramController::class, 'send
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Route::get('sendPoll', [App\Http\Controllers\TelegramController::class, 'sendPoll']);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Route::get('telegram-message-webhook', [App\Http\Controllers\TelegramController::class, 'telegram_webhook']);
+Route::post('telegram-message-webhook', [App\Http\Controllers\TelegramController::class, 'telegram_webhook']);
