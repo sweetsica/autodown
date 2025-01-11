@@ -1,47 +1,38 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Telegram\Bot\Laravel\Facades\Telegram;
-use App\Services\DownloadTikTokService;
+use WeStacks\TeleBot\TeleBot;
 
-class TelegramBotController extends Controller
+class TelegramController extends Controller
 {
-    protected $tiktokService;
-
-    public function __construct(DownloadTikTokService $tiktokService)
+    public function sendMessage(Request $request)
     {
-        $this->tiktokService = $tiktokService;
-    }
+        $validated = $request->validate([
+            'message' => 'required|string|max:4096',
+        ]);
 
-    public function webhook(Request $request)
-    {
-        $updates = Telegram::getWebhookUpdates();
-
-        $chatId = $updates->getMessage()->getChat()->getId();
-        $text = $updates->getMessage()->getText(); // Lấy nội dung tin nhắn
-
-        if (filter_var($text, FILTER_VALIDATE_URL)) {
-            $result = $this->tiktokService->getVideoDownloadLink($text);
-
-            if ($result['success']) {
-                Telegram::sendVideo([
-                    'chat_id' => $chatId,
-                    'video' => $result['download_url'],
-                ]);
-            } else {
-                Telegram::sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => 'Không thể tải video, vui lòng kiểm tra lại URL.',
-                ]);
-            }
-        } else {
-            Telegram::sendMessage([
-                'chat_id' => $chatId,
-                'text' => 'Vui lòng gửi một URL video TikTok.',
+        try {
+            // Gửi tin nhắn qua TeleBot
+            $bot = new TeleBot([
+                'token' => env('TELEGRAM_BOT_TOKEN'), // Lấy token từ .env
             ]);
-        }
 
-        return response('OK', 200);
+            $response = $bot->sendMessage([
+                'chat_id' => env('TELEGRAM_CHAT_ID'), // Lấy chat ID từ .env
+                'text'    => $validated['message'],
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'response' => $response,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error'   => $e->getMessage(),
+            ], 500);
+        }
     }
 }
