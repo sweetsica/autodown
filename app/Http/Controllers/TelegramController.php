@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use WeStacks\TeleBot\TeleBot;
 
-class TelegramBotController extends Controller
+class TelegramController extends Controller
 {
     //+++++++++++++++++++++++++++++++++++++++
     private $bot;
