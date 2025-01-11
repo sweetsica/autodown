@@ -11,7 +11,7 @@ class TelegramController extends Controller
     //+++++++++++++++++++++++++++++++++++++++
     private $bot;
     private $message_text;
-    private $chat_id = 5123543075;
+    private $chat_id = 5047537302;
     //+++++++++++++++++++++++++++++++++++++++
     public function __construct()
     {
