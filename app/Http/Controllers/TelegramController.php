@@ -15,7 +15,7 @@ class TelegramController extends Controller
     //+++++++++++++++++++++++++++++++++++++++
     public function __construct()
     {
-        $this->bot = new TeleBot('YOUR TOKEN');
+        $this->bot = new TeleBot(env('TELEGRAM_BOT_TOKEN'));
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function index()
