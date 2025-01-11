@@ -26,53 +26,40 @@ class TelegramController extends Controller
     public function telegram_webhook(Request $request)
     {
         try {
-            \Log::info('Webhook received: ' . json_encode($request->all()));
-
             $data = $request->all();
 
             if (!isset($data['message']['chat']['id']) || !isset($data['message']['text'])) {
-                \Log::error('Invalid data structure: ' . json_encode($data));
                 return response()->json(['error' => 'Invalid data'], 400);
             }
 
             $this->chat_id = $data['message']['chat']['id'];
             $this->message_text = $data['message']['text'];
 
-            // Gửi phản hồi
+            // Tạo nội dung phản hồi
             $response_text = "Đã nhận tin nhắn từ chat_id: $this->chat_id. Nội dung là: $this->message_text";
+
+            // Gửi tin nhắn phản hồi
             $this->sendMessage($response_text);
 
-            \Log::info('Response sent successfully');
             return response()->json(['status' => 'success'], 200);
-
         } catch (\Exception $e) {
             \Log::error('Telegram Webhook Error: ' . $e->getMessage());
             return response()->json(['error' => 'Server error'], 500);
         }
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function sendMessage(Request $request)
-    {
-        try {
-            $message = $this->bot->sendMessage([
-                'chat_id'      => $this->chat_id,
-                'text'         => 'Welcome To Code-180 Youtube Channel',
-                'reply_markup' => [
-                    'inline_keyboard' => [[[
-                        'text' => '@code-180',
-                        'url'  => 'https://www.youtube.com/@code-180/videos',
-                    ]]],
-                ],
-            ]);
-            // $message = $this->bot->sendMessage([
-            //     'chat_id' => $this->chat_id,
-            //     'text'    => 'Welcome To Code-180 Youtube Channel',
-            // ]);
-        } catch (Exception $e) {
-            $message = 'Message: ' . $e->getMessage();
-        }
-        return Response::json($message);
+    public function sendMessage($response_text)
+{
+    try {
+        $message = $this->bot->sendMessage([
+            'chat_id' => $this->chat_id,
+            'text'    => $response_text,
+        ]);
+        \Log::info('Message sent: ' . json_encode($message));
+    } catch (\Exception $e) {
+        \Log::error('Error sending message: ' . $e->getMessage());
     }
+}
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function sendPhoto(Request $request)
     {
