@@ -28,11 +28,29 @@ class TelegramController extends Controller
         //+++++++++++++++++++++++++++++++++++++++++
         //Webhook
         //+++++++++++++++++++++++++++++++++++++++++
-        $data = json_decode($request->all());
-        if ($data) {
-            $this->chat_id      = $data->message->chat->id;
-            $this->message_text = $data->message->text;
+        // $data = json_decode($request->all());
+        // if ($data) {
+        //     $this->chat_id      = $data->message->chat->id;
+        //     $this->message_text = $data->message->text;
+        // }
+        // Lấy dữ liệu từ webhook (Telegram gửi dưới dạng JSON)
+        $data = $request->all();
+
+        // Kiểm tra nếu có dữ liệu message
+        if (isset($data['message']['chat']['id']) && isset($data['message']['text'])) {
+            // Lấy chat_id và message_text từ dữ liệu
+            $this->chat_id = $data['message']['chat']['id'];
+            $this->message_text = $data['message']['text'];
+
+            // Tạo nội dung tin nhắn phản hồi
+            $response_text = "Đã nhận tin nhắn từ chat_id: $this->chat_id. Nội dung là: $this->message_text";
+
+            // Gọi phương thức sendMessage để gửi phản hồi lại cho người dùng
+            $this->sendMessage($response_text);
         }
+
+        // Trả về phản hồi thành công
+        return response()->json(['status' => 'success']);
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function sendMessage(Request $request)
