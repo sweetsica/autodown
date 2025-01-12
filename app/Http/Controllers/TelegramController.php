@@ -220,3 +220,10 @@ class TelegramController extends Controller
     }
 
 }
+
+
+// https://github.com/Code-180/Telegram-Bot-Code-PHP/blob/main/Route-File/web.php
+
+// https://github.com/westacks/telebot-laravel
+
+// https://westacks.github.io/telebot/#/laravel?id=webhook
