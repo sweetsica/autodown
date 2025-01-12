@@ -55,7 +55,7 @@ class TelegramController extends Controller
             'chat_id' => $this->chat_id,
             'text'    => $response_text,
         ]);
-        \Log::info('Message sent: ' . json_encode($message));
+        // \Log::info('Message sent: ' . json_encode($message));
     } catch (\Exception $e) {
         \Log::error('Error sending message: ' . $e->getMessage());
     }
