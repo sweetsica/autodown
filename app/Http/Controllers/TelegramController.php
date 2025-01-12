@@ -114,12 +114,57 @@ class TelegramController extends Controller
             //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             $message = $this->bot->sendVideo([
                 'chat_id' => $this->chat_id,
-                'video'   => fopen(asset('public/upload/Password.mp4'), 'r'),
+                // 'video'   => fopen(asset('public/upload/Password.mp4'), 'r'),
+                'video'   => 'https://v16m-default.akamaized.net/d6fa0630ca4435bf8fd5dbd38ab05fc3/6783eb32/video/tos/alisg/tos-alisg-pve-0037c001/owEIAIkgjwJQOAXeF2ExLVWjHHeGICL14f4DYU/?a=0&bti=OUBzOTg7QGo6OjZAL3AjLTAzYCMxNDNg&ch=0&cr=0&dr=0&er=0&lr=all&net=0&cd=0%7C0%7C0%7C0&cv=1&br=3792&bt=1896&cs=0&ds=6&ft=XE5bCqT0majPD12G.QGJ3wUOx5EcMeF~O5&mime_type=video_mp4',
             ]);
         } catch (Exception $e) {
             $message = 'Message: ' . $e->getMessage();
         }
         return Response::json($message);
+    }
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function sendMediaGroup(Request $request)
+    {
+        try {
+            // Chat ID của người nhận hoặc nhóm
+            $chatId = $this->chat_id; // Thay bằng giá trị chat ID phù hợp
+
+            // Tạo nhóm ảnh
+            $media = [
+                [
+                    'type' => 'photo',
+                    'media' => 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-i-photomode-sg/bafd4970536441aa980aa7305950716b~tplv-photomode-2k-shrink-v1:1200:0:q70.jpeg?dr=14555&from=photomode.AWEME_DETAIL&ftpl=1&idc=maliva&nonce=90069&ps=13740610&refresh_token=658c049bd9ee52f457657883e6bdd2bb&s=AWEME_DETAIL&shcp=34ff8df6&shp=d05b14bd&t=4d5b0474&x-expires=1737964800&x-signature=Q60D%2BGXAA0zcfXmXLPwkitF8bMs%3D', // Đường dẫn ảnh
+                    'caption' => 'trangherbst 1', // Chú thích (nếu cần)
+                ],
+                [
+                    'type' => 'photo',
+                    'media' => 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-i-photomode-sg/1950c61ca9184f6aab0e06c5ae3ee38f~tplv-photomode-image-v1:q70.jpeg?dr=14555&from=photomode.AWEME_DETAIL&ftpl=1&idc=maliva&nonce=74700&ps=13740610&refresh_token=dc8082cf772228af366869e169059220&s=AWEME_DETAIL&shcp=34ff8df6&shp=d05b14bd&t=4d5b0474&x-expires=1737964800&x-signature=WKJi6MnA%2BRQ1TeH7gFGrTnrhmBI%3D',
+                    'caption' => 'trangherbst 2',
+                ],
+                [
+                    'type' => 'photo',
+                    'media' => 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-i-photomode-sg/a21b74ed40ec4c7a9e26598da08b3f86~tplv-photomode-image-v1:q70.jpeg?dr=14555&from=photomode.AWEME_DETAIL&ftpl=1&idc=maliva&nonce=39764&ps=13740610&refresh_token=ad4b28f08ce9190bc97f55a393378a00&s=AWEME_DETAIL&shcp=34ff8df6&shp=d05b14bd&t=4d5b0474&x-expires=1737964800&x-signature=U6hy2qgxi2xC37fFW4qFsOPjcQI%3D',
+                    'caption' => 'trangherbst 3',
+                ],
+                [
+                    'type' => 'photo',
+                    'media' => 'https://p16-sign-sg.tiktokcdn.com/tos-alisg-i-photomode-sg/498f7011faa34e3ca24e7d06156c51bb~tplv-photomode-image-v1:q70.jpeg?dr=14555&from=photomode.AWEME_DETAIL&ftpl=1&idc=maliva&nonce=21210&ps=13740610&refresh_token=3722d9aad26edc6d31d2d91fe45efe3a&s=AWEME_DETAIL&shcp=34ff8df6&shp=d05b14bd&t=4d5b0474&x-expires=1737964800&x-signature=79eDupu1AXI9RRZ%2BPcgY4M2jGpI%3D',
+                    'caption' => 'trangherbst 4',
+                ],
+            ];
+
+            // Gửi nhóm ảnh qua API bot
+            $message = $this->bot->sendMediaGroup([
+                'chat_id' => $chatId,
+                'media' => $media,
+            ]);
+        } catch (Exception $e) {
+            // Bắt lỗi nếu có
+            $message = 'Message: ' . $e->getMessage();
+        }
+
+        // Trả về phản hồi JSON
+        return response()->json($message);
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function sendVoice(Request $request)

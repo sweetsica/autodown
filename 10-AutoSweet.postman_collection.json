@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "c067e20e-af09-46f7-ba5e-9a798e07f975",
+		"name": "10-AutoSweet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31615420"
+	},
+	"item": [
+		{
+			"name": "download tikkm",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS6He9Da4",
+							"type": "text"
+						},
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS69FnxCL",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://tikwm.com/api/",
+					"protocol": "https",
+					"host": [
+						"tikwm",
+						"com"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download TikTok",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS69FnxCL",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://lara-autodown.test:81/api/tiktok",
+					"protocol": "http",
+					"host": [
+						"lara-autodown",
+						"test"
+					],
+					"port": "81",
+					"path": [
+						"api",
+						"tiktok"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setWebhook",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "url",
+							"value": "https://autodown.sweetsica.com/",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.telegram.org/bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w/setWebhook?url=https://autodown.sweetsica.com/telegram-message-webhook",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w",
+						"setWebhook"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://autodown.sweetsica.com/telegram-message-webhook"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send text tele",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.telegram.org/bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w/sendMessage?text=Tin nhắn gửi demo&parse_mode=MarkdownV2&chat_id=-1002424342112",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w",
+						"sendMessage"
+					],
+					"query": [
+						{
+							"key": "chat_id",
+							"value": "5047537302",
+							"disabled": true
+						},
+						{
+							"key": "text",
+							"value": "Tin nhắn gửi demo"
+						},
+						{
+							"key": "parse_mode",
+							"value": "MarkdownV2"
+						},
+						{
+							"key": "chat_id",
+							"value": "-1002424342112"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get info tele",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.telegram.org/bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w/getMe?chat_id=-7500224086",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w",
+						"getMe"
+					],
+					"query": [
+						{
+							"key": "chat_id",
+							"value": "-7500224086"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get info tele setWebhook",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.telegram.org/bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w/getWebhookInfo",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w",
+						"getWebhookInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get info tele Update",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.telegram.org/bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w/getUpdates",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w",
+						"getUpdates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get info tele deleteWebhook",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.telegram.org/bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w/deleteWebhook",
+					"protocol": "https",
+					"host": [
+						"api",
+						"telegram",
+						"org"
+					],
+					"path": [
+						"bot7500224086:AAETOpiV8qBupHsuYzzMJlGmlXhLdest00w",
+						"deleteWebhook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "telegram-message-webhook",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "chat_id",
+							"value": "5047537302",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://autodown.sweetsica.com/telegram-message-webhook",
+					"protocol": "https",
+					"host": [
+						"autodown",
+						"sweetsica",
+						"com"
+					],
+					"path": [
+						"telegram-message-webhook"
+					],
+					"query": [
+						{
+							"key": "chat_id",
+							"value": "5047537302",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "telegram-message-webhook Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "chat_id",
+							"value": "5047537302",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://lara-autodown.test:81/sendMediaGroup",
+					"protocol": "http",
+					"host": [
+						"lara-autodown",
+						"test"
+					],
+					"port": "81",
+					"path": [
+						"sendMediaGroup"
+					],
+					"query": [
+						{
+							"key": "chat_id",
+							"value": "5047537302",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
