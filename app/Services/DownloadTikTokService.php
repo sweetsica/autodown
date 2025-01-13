@@ -16,9 +16,18 @@ class DownloadTikTokService
 
             if ($response->successful()) {
                 $data = $response->json();
-
-                // Kiểm tra và lấy đường dẫn video
-                if (isset($data['data']['play'])) {
+                // dd($data);
+                // Kiểm tra nếu 'data' có 'image' và 'image' là mảng hợp lệ
+                if (isset($data['data']['images']) && is_array($data['data']['images'])) {
+                    // Nếu 'image' là mảng, trả về các URL từ mảng 'image'
+                    $imageUrls = array_values($data['data']['images']); // Lấy giá trị từ mảng 'image'
+                    return [
+                        'success' => true,
+                        'image_urls' => $imageUrls, // Trả về các URL hình ảnh
+                    ];
+                }
+                // Nếu không có 'image', trả về 'play' (URL tải video)
+                elseif (isset($data['data']['play'])) {
                     return [
                         'success' => true,
                         'download_url' => $data['data']['play'],
@@ -26,7 +35,7 @@ class DownloadTikTokService
                 } else {
                     return [
                         'success' => false,
-                        'message' => 'Download link not found in API response.',
+                        'message' => 'No image or video download link found in API response.',
                     ];
                 }
             }
@@ -42,4 +51,5 @@ class DownloadTikTokService
             ];
         }
     }
+
 }

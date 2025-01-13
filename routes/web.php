@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FunctionController;
 use App\Http\Controllers\TelegramController;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 
 Route::get('/', function () {
@@ -18,6 +19,9 @@ Route::get('/filter-phone',[FunctionController::class,'filterPhone'])->name('fil
 Route::get('/test', function () {
     dd(env('FLICK_API_KEY'));
 });
+
+Route::post('/getDownloadLink',[FunctionController::class,'getDownloadLink'])->name('getDownloadLink')
+->withoutMiddleware([VerifyCsrfToken::class]);
 
 //+++++++++++++++++++++++++++++
 //Auth::routes();
@@ -46,4 +50,7 @@ Route::get('sendMediaGroup', [App\Http\Controllers\TelegramController::class, 's
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Route::get('sendPoll', [App\Http\Controllers\TelegramController::class, 'sendPoll']);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Route::post('telegram-message-webhook', [App\Http\Controllers\TelegramController::class, 'telegram_webhook']);
+// Route::post('telegram-message-webhook', [App\Http\Controllers\TelegramController::class, 'telegram_webhook']);
+
+Route::post('/telegram-message-webhook',[FunctionController::class,'telegramDownload'])->name('telegramDownload');
+
