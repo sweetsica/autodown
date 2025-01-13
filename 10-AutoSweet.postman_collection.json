@@ -246,11 +246,8 @@
 		},
 		{
 			"name": "telegram-message-webhook",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "urlencoded",
@@ -286,7 +283,7 @@
 			"response": []
 		},
 		{
-			"name": "telegram-message-webhook Copy",
+			"name": "sendMediaGroup",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -319,6 +316,135 @@
 						{
 							"key": "chat_id",
 							"value": "5047537302",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDownloadLink",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS6He9Da4",
+							"description": "video",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS69FnxCL",
+							"description": "image",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS6m8LFjp",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS6xfThXh",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://lara-autodown.test:81/getDownloadLink",
+					"protocol": "http",
+					"host": [
+						"lara-autodown",
+						"test"
+					],
+					"port": "81",
+					"path": [
+						"getDownloadLink"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS6He9Da4",
+							"description": "video",
+							"disabled": true
+						},
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS69FnxCL",
+							"description": "image",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDownloadLink autodown",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS6He9Da4",
+							"description": "video",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS69FnxCL",
+							"description": "image",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS6m8LFjp",
+							"description": "multi huge",
+							"type": "text"
+						},
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS6xfThXh",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://lara-autodown.test:81/getDownloadLink",
+					"protocol": "http",
+					"host": [
+						"lara-autodown",
+						"test"
+					],
+					"port": "81",
+					"path": [
+						"getDownloadLink"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS6He9Da4",
+							"description": "video",
+							"disabled": true
+						},
+						{
+							"key": "url",
+							"value": "https://vt.tiktok.com/ZS69FnxCL",
+							"description": "image",
 							"disabled": true
 						}
 					]
