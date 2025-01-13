@@ -114,6 +114,19 @@ class FunctionController extends Controller
         // Trả về phản hồi JSON
         return response()->json($message);
     }
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public function sendMessage($response_text)
+    {
+        try {
+            $message = $this->bot->sendMessage([
+                'chat_id' => $this->chat_id,
+                'text'    => $response_text,
+            ]);
+            // \Log::info('Message sent: ' . json_encode($message));
+        } catch (\Exception $e) {
+            \Log::error('Error sending message: ' . $e->getMessage());
+        }
+    }
 
     public function telegramDownload(Request $request)
     {
