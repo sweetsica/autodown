@@ -92,6 +92,9 @@ class FunctionController extends Controller
             // Chat ID của người nhận hoặc nhóm
             $chatId = $this->chat_id; // Thay bằng giá trị chat ID phù hợp
 
+            // Giới hạn chỉ lấy 4 hình ảnh đầu tiên nếu có nhiều hơn 4
+            $imageUrls = array_slice($imageUrls, 0, 4);
+
             // Tạo nhóm ảnh từ các URL
             $media = [];
             foreach ($imageUrls as $url) {
@@ -114,6 +117,7 @@ class FunctionController extends Controller
         // Trả về phản hồi JSON
         return response()->json($message);
     }
+
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function sendMessage($response_text)
     {
