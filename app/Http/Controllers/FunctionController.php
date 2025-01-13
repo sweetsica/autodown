@@ -137,13 +137,12 @@ class FunctionController extends Controller
         try {
             $data = $request->all();
 
-            // // Kiểm tra xem tin nhắn có chứa 'chat' và 'text' không
-            // if (!isset($data['message']['chat']['id']) || !isset($data['message']['text'])) {
-            //     return response()->json(['error' => 'Invalid data'], 400);
-            // }
+            // Kiểm tra xem tin nhắn có chứa 'text' không
+            if (!isset($data['message']['text'])) {
+                return response()->json(['error' => 'Invalid data'], 400);
+            }
 
-            // Lấy chat_id và message_text (URL)
-            // $this->chat_id = $data['message']['chat']['id'];
+            // Lấy message_text (URL)
             $this->message_text = $data['message']['text'];
 
             // Kiểm tra nếu tin nhắn là một URL hợp lệ (URL video từ TikTok)
@@ -173,5 +172,6 @@ class FunctionController extends Controller
             return response()->json(['error' => 'Server error'], 500);
         }
     }
+
 
 }
