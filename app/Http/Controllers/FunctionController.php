@@ -93,7 +93,7 @@ class FunctionController extends Controller
             $chatId = $this->chat_id; // Thay bằng giá trị chat ID phù hợp
 
             // Giới hạn chỉ lấy 4 hình ảnh đầu tiên nếu có nhiều hơn 4
-            $imageUrls = array_slice($imageUrls, 0, 4);
+            $imageUrls = array_slice($imageUrls, 0, 10);
 
             // Tạo nhóm ảnh từ các URL
             $media = [];
