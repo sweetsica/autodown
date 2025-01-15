@@ -173,5 +173,8 @@ class FunctionController extends Controller
         }
     }
 
+    public function luckynumber(Request $request){
+        return  response()->json(['data'=>$request],200);
+    }
 
 }
