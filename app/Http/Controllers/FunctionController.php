@@ -7,6 +7,7 @@ use App\Services\DownloadFlickrService;
 use App\Services\DownloadTikTokService;
 use WeStacks\TeleBot\TeleBot;
 use Illuminate\Support\Facades\Response;
+use App\Models\LuckyNumber;
 
 class FunctionController extends Controller
 {
@@ -173,8 +174,29 @@ class FunctionController extends Controller
         }
     }
 
-    public function luckynumber(Request $request){
-        return  response()->json(['data'=>$request->all()],200);
+    public function luckynumber(Request $request)
+    {
+        try {
+            // Sinh một số ngẫu nhiên từ 1 tới 1500
+            do {
+                $randomNumber = str_pad(rand(1, 1500), 4, '0', STR_PAD_LEFT); // Đảm bảo số luôn có 4 chữ số
+            } while (LuckyNumber::where('luckynumber', $randomNumber)->exists()); // Kiểm tra nếu số đã tồn tại
+
+            // Lưu tất cả dữ liệu từ request và thêm số ngẫu nhiên vào
+            $luckyNumber = LuckyNumber::create(array_merge($request->all(), ['luckynumber' => $randomNumber]));
+
+            // Trả về giá trị từ request cùng với số ngẫu nhiên đã tạo ra
+            return response()->json([
+                'request_data' => $request->all(), // Dữ liệu từ request
+                'luckynumber' => $luckyNumber->luckynumber // Số ngẫu nhiên đã tạo
+            ], 200);
+        } catch (\Exception $e) {
+            // Nếu có lỗi, trả về lỗi 500 và chi tiết lỗi
+            return response()->json([
+                'error' => 'Có lỗi xảy ra',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
 }
