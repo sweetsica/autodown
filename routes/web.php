@@ -54,4 +54,4 @@ Route::get('sendMediaGroup', [App\Http\Controllers\TelegramController::class, 's
 
 Route::post('/telegram-message-webhook',[FunctionController::class,'telegramDownload'])->name('telegramDownload');
 
-Route::post('/luckynumber',[FunctionController::class,'luckynumber'])->name('luckynumber')->withoutMiddleware([VerifyCsrfToken::class]);
+Route::post('/luckynumber',[FunctionController::class,'luckynumber'])->withoutMiddleware([VerifyCsrfToken::class]);
