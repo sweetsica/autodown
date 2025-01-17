@@ -87,13 +87,10 @@ class FunctionController extends Controller
         return response()->json($message);
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function sendMediaGroup($imageUrls)
+    public function sendMediaGroup($imageUrls, $chat_id)
     {
         try {
-            // Chat ID của người nhận hoặc nhóm
-            $chatId = $this->chat_id; // Thay bằng giá trị chat ID phù hợp
-
-            // Giới hạn chỉ lấy 4 hình ảnh đầu tiên nếu có nhiều hơn 4
+            // Giới hạn chỉ lấy 10 hình ảnh đầu tiên nếu có nhiều hơn
             $imageUrls = array_slice($imageUrls, 0, 10);
 
             // Tạo nhóm ảnh từ các URL
@@ -105,9 +102,9 @@ class FunctionController extends Controller
                 ];
             }
 
-            // Gửi nhóm ảnh qua API bot
+            // Gửi nhóm ảnh qua API bot, sử dụng chat_id được truyền vào
             $message = $this->bot->sendMediaGroup([
-                'chat_id' => $chatId,
+                'chat_id' => $chat_id, // Dùng $chat_id được truyền vào
                 'media' => $media,
             ]);
         } catch (Exception $e) {
@@ -120,14 +117,14 @@ class FunctionController extends Controller
     }
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function sendMessage($response_text)
+    public function sendMessage($response_text, $chat_id)
     {
         try {
+            // Gửi tin nhắn sử dụng chat_id được truyền vào
             $message = $this->bot->sendMessage([
-                'chat_id' => $this->chat_id,
+                'chat_id' => $chat_id, // Dùng $chat_id được truyền vào
                 'text'    => $response_text,
             ]);
-            // \Log::info('Message sent: ' . json_encode($message));
         } catch (\Exception $e) {
             \Log::error('Error sending message: ' . $e->getMessage());
         }
@@ -145,6 +142,7 @@ class FunctionController extends Controller
 
             // Lấy message_text (URL)
             $this->message_text = $data['message']['text'];
+            $chatId = $data['message']['chat']['id'];
 
             // Kiểm tra nếu tin nhắn là một URL hợp lệ (URL video từ TikTok)
             if (filter_var($this->message_text, FILTER_VALIDATE_URL)) {
@@ -154,17 +152,17 @@ class FunctionController extends Controller
                 // Kiểm tra kết quả và gửi video hoặc nhóm ảnh tương ứng
                 if (isset($result['image_urls']) && !empty($result['image_urls'])) {
                     // Gửi nhóm ảnh nếu có dữ liệu hình ảnh
-                    $this->sendMediaGroup($result['image_urls']);
+                    $this->sendMediaGroup($result['image_urls'], $chatId);
                 } elseif (isset($result['download_url'])) {
                     // Gửi video nếu có URL tải video
-                    $this->sendVideo($result['download_url']);
+                    $this->sendVideo($result['download_url'], $chatId);
                 } else {
                     // Nếu không có dữ liệu hợp lệ
-                    $this->sendMessage("Không thể lấy dữ liệu từ URL này.");
+                    $this->sendMessage("Không thể lấy dữ liệu từ URL này. Chat ID của bạn là: $chatId", $chatId);
                 }
             } else {
                 // Nếu không phải là URL hợp lệ
-                $this->sendMessage("Vui lòng gửi một URL hợp lệ.");
+                $this->sendMessage("Vui lòng gửi một URL hợp lệ. Chat ID của bạn là: $chatId", $chatId);
             }
 
             return response()->json(['status' => 'success'], 200);

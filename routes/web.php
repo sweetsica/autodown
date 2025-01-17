@@ -20,6 +20,10 @@ Route::get('/test', function () {
     dd(env('FLICK_API_KEY'));
 });
 
+Route::get('/lucky-number', function () {
+    return view('luckynumber');
+});
+
 Route::post('/getDownloadLink',[FunctionController::class,'getDownloadLink'])->name('getDownloadLink')
 ->withoutMiddleware([VerifyCsrfToken::class]);
 
@@ -54,4 +58,4 @@ Route::get('sendMediaGroup', [App\Http\Controllers\TelegramController::class, 's
 
 Route::post('/telegram-message-webhook',[FunctionController::class,'telegramDownload'])->name('telegramDownload');
 
-Route::post('/luckynumber',[FunctionController::class,'luckynumber'])->withoutMiddleware([VerifyCsrfToken::class]);
+// Route::post('/luckynumber',[FunctionController::class,'luckynumber'])->withoutMiddleware([VerifyCsrfToken::class]);
