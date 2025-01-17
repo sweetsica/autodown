@@ -16,7 +16,7 @@ class FunctionController extends Controller
     //+++++++++++++++++++++++++++++++++++++++
     private $bot;
     private $message_text;
-    private $chat_id;
+    private $chat_id = 5047537302;
     //+++++++++++++++++++++++++++++++++++++++
 
     public function __construct(DownloadFlickrService $downloadFlickrService, DownloadTikTokService $tiktokService)
@@ -86,14 +86,57 @@ class FunctionController extends Controller
         }
         return response()->json($message);
     }
-    public function sendMediaGroup($imageUrls, $data)
-{
-    try {
-        // Kiểm tra xem dữ liệu có chứa 'message' và 'chat' không
-        if (isset($data['message']['chat']['id'])) {
-            // Lấy chat_id từ dữ liệu webhook
-            $chatId = $data['message']['chat']['id'];
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // public function sendMediaGroup($imageUrls)
+    // {
+    //     try {
+    //         // Chat ID của người nhận hoặc nhóm
+    //         $chatId = $this->chat_id; // Thay bằng giá trị chat ID phù hợp
 
+    //         // Giới hạn chỉ lấy 4 hình ảnh đầu tiên nếu có nhiều hơn 4
+    //         $imageUrls = array_slice($imageUrls, 0, 10);
+
+    //         // Tạo nhóm ảnh từ các URL
+    //         $media = [];
+    //         foreach ($imageUrls as $url) {
+    //             $media[] = [
+    //                 'type' => 'photo',
+    //                 'media' => $url, // Đường dẫn ảnh
+    //             ];
+    //         }
+
+    //         // Gửi nhóm ảnh qua API bot
+    //         $message = $this->bot->sendMediaGroup([
+    //             'chat_id' => $chatId,
+    //             'media' => $media,
+    //         ]);
+    //     } catch (Exception $e) {
+    //         // Bắt lỗi nếu có
+    //         $message = 'Message: ' . $e->getMessage();
+    //     }
+
+    //     // Trả về phản hồi JSON
+    //     return response()->json($message);
+    // }
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // public function sendMessage($response_text)
+    // {
+    //     try {
+    //         $message = $this->bot->sendMessage([
+    //             'chat_id' => $this->chat_id,
+    //             'text'    => $response_text,
+    //         ]);
+    //         // \Log::info('Message sent: ' . json_encode($message));
+    //     } catch (\Exception $e) {
+    //         \Log::error('Error sending message: ' . $e->getMessage());
+    //     }
+    // }
+
+    // Gửi nhóm hình ảnh/media
+    protected function sendMediaGroup($imageUrls, $chatId)
+    {
+        try {
             // Giới hạn chỉ lấy 10 hình ảnh đầu tiên nếu có nhiều hơn
             $imageUrls = array_slice($imageUrls, 0, 10);
 
@@ -106,64 +149,50 @@ class FunctionController extends Controller
                 ];
             }
 
-            // Gửi nhóm ảnh qua API bot, sử dụng chat_id lấy từ dữ liệu webhook
+            // Gửi nhóm ảnh qua API bot Telegram
             $message = $this->bot->sendMediaGroup([
-                'chat_id' => $chatId, // Lấy chat_id từ dữ liệu
-                'media' => $media,
+                'chat_id' => $chatId,
+                'media'   => $media,
             ]);
-        } else {
-            \Log::error('No valid chat_id in the data', $data);
-            return response()->json(['error' => 'No valid chat_id found in the update'], 400);
+            \Log::info('Media Group Sent:', $message);
+        } catch (\Exception $e) {
+            \Log::error('Error sending media group: ' . $e->getMessage());
         }
-    } catch (Exception $e) {
-        // Bắt lỗi nếu có
-        \Log::error('Error sending media group: ' . $e->getMessage());
-        $message = 'Message: ' . $e->getMessage();
     }
 
-    // Trả về phản hồi JSON
-    return response()->json($message);
-}
-
-public function sendMessage($response_text, $data)
-{
-    try {
-        // Kiểm tra xem dữ liệu có chứa 'message' và 'chat' không
-        if (isset($data['message']['chat']['id'])) {
-            // Lấy chat_id từ dữ liệu webhook
-            $chatId = $data['message']['chat']['id'];
-
-            // Gửi tin nhắn sử dụng chat_id lấy từ dữ liệu
+    // Gửi tin nhắn
+    protected function sendMessage($response_text, $chatId)
+    {
+        try {
+            // Gửi tin nhắn qua API bot Telegram
             $message = $this->bot->sendMessage([
-                'chat_id' => $chatId, // Lấy chat_id từ dữ liệu
+                'chat_id' => $chatId,
                 'text'    => $response_text,
             ]);
-        } else {
-            \Log::error('No valid chat_id in the data', $data);
-            return response()->json(['error' => 'No valid chat_id found in the update'], 400);
+            \Log::info('Message sent: ' . json_encode($message));
+        } catch (\Exception $e) {
+            \Log::error('Error sending message: ' . $e->getMessage());
         }
-    } catch (\Exception $e) {
-        \Log::error('Error sending message: ' . $e->getMessage());
     }
-}
+
 
     public function telegramDownload(Request $request)
     {
         try {
+            // Lấy toàn bộ dữ liệu từ webhook của Telegram
             $data = $request->all();
 
-            // Log dữ liệu để kiểm tra cấu trúc của webhook
-            \Log::info('Webhook Data:', $data);
-
-            return $data;
             // Kiểm tra xem tin nhắn có chứa 'text' không
             if (!isset($data['message']['text'])) {
                 return response()->json(['error' => 'Invalid data'], 400);
             }
 
-            // Lấy message_text (URL)
+            // Lấy message_text (URL) từ tin nhắn người dùng
             $this->message_text = $data['message']['text'];
-            $chatId = $data['message']['chat']['id'];
+            $chatId = $data['message']['chat']['id']; // Lấy chat_id của người dùng
+
+            // Gửi lại chat_id cho người dùng
+            $this->sendMessage("Id của bạn là: $chatId", $chatId);
 
             // Kiểm tra nếu tin nhắn là một URL hợp lệ (URL video từ TikTok)
             if (filter_var($this->message_text, FILTER_VALIDATE_URL)) {
@@ -179,11 +208,11 @@ public function sendMessage($response_text, $data)
                     $this->sendVideo($result['download_url'], $chatId);
                 } else {
                     // Nếu không có dữ liệu hợp lệ
-                    $this->sendMessage("Không thể lấy dữ liệu từ URL này. Chat ID của bạn là: $chatId", $chatId);
+                    $this->sendMessage("Không thể lấy dữ liệu từ URL này.", $chatId);
                 }
             } else {
                 // Nếu không phải là URL hợp lệ
-                $this->sendMessage("Vui lòng gửi một URL hợp lệ. Chat ID của bạn là: $chatId", $chatId);
+                $this->sendMessage("Vui lòng gửi một URL hợp lệ.", $chatId);
             }
 
             return response()->json(['status' => 'success'], 200);
@@ -192,6 +221,8 @@ public function sendMessage($response_text, $data)
             return response()->json(['error' => 'Server error'], 500);
         }
     }
+
+
 
     public function luckynumber(Request $request)
     {
