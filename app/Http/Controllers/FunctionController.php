@@ -52,6 +52,8 @@ class FunctionController extends Controller
         return view('filter_phone');
     }
 
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Gọi trực tiếp k qua webhook
     public function getDownloadLink(Request $request)
     {
         $videoUrl = $request->input('url');
@@ -133,6 +135,8 @@ class FunctionController extends Controller
     //     }
     // }
 
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // Gửi video
     public function sendVideo($videoUrl, $chatId)
     {
         try {
@@ -148,6 +152,8 @@ class FunctionController extends Controller
         // Trả về phản hồi JSON
         return response()->json($message);
     }
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Gửi nhóm hình ảnh/media
     protected function sendMediaGroup($imageUrls, $chatId)
     {
@@ -175,6 +181,7 @@ class FunctionController extends Controller
         }
     }
 
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Gửi tin nhắn
     protected function sendMessage($response_text, $chatId)
     {
@@ -190,7 +197,8 @@ class FunctionController extends Controller
         }
     }
 
-
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //Webhook
     public function telegramDownload(Request $request)
     {
         try {
