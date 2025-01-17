@@ -86,30 +86,34 @@ class FunctionController extends Controller
         }
         return response()->json($message);
     }
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function sendMediaGroup($imageUrls, $data)
     {
         try {
-            // Lấy chat_id từ dữ liệu nhận được từ webhook
-            $chatId = $data['message']['chat']['id'];
+            // Kiểm tra xem dữ liệu có chứa 'message' không
+            if (isset($data['message'])) {
+                $chatId = $data['message']['chat']['id'];
 
-            // Giới hạn chỉ lấy 10 hình ảnh đầu tiên nếu có nhiều hơn
-            $imageUrls = array_slice($imageUrls, 0, 10);
+                // Giới hạn chỉ lấy 10 hình ảnh đầu tiên nếu có nhiều hơn
+                $imageUrls = array_slice($imageUrls, 0, 10);
 
-            // Tạo nhóm ảnh từ các URL
-            $media = [];
-            foreach ($imageUrls as $url) {
-                $media[] = [
-                    'type' => 'photo',
-                    'media' => $url, // Đường dẫn ảnh
-                ];
+                // Tạo nhóm ảnh từ các URL
+                $media = [];
+                foreach ($imageUrls as $url) {
+                    $media[] = [
+                        'type' => 'photo',
+                        'media' => $url, // Đường dẫn ảnh
+                    ];
+                }
+
+                // Gửi nhóm ảnh qua API bot, sử dụng chat_id lấy từ dữ liệu
+                $message = $this->bot->sendMediaGroup([
+                    'chat_id' => $chatId, // Lấy chat_id từ dữ liệu
+                    'media' => $media,
+                ]);
+            } else {
+                \Log::error('No message in the data', $data);
+                return response()->json(['error' => 'No message found in the update'], 400);
             }
-
-            // Gửi nhóm ảnh qua API bot, sử dụng chat_id lấy từ dữ liệu
-            $message = $this->bot->sendMediaGroup([
-                'chat_id' => $chatId, // Lấy chat_id từ dữ liệu
-                'media' => $media,
-            ]);
         } catch (Exception $e) {
             // Bắt lỗi nếu có
             $message = 'Message: ' . $e->getMessage();
@@ -119,18 +123,22 @@ class FunctionController extends Controller
         return response()->json($message);
     }
 
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function sendMessage($response_text, $data)
     {
         try {
-            // Lấy chat_id từ dữ liệu nhận được từ webhook
-            $chatId = $data['message']['chat']['id'];
+            // Kiểm tra xem dữ liệu có chứa 'message' không
+            if (isset($data['message'])) {
+                $chatId = $data['message']['chat']['id'];
 
-            // Gửi tin nhắn sử dụng chat_id lấy từ dữ liệu
-            $message = $this->bot->sendMessage([
-                'chat_id' => $chatId, // Lấy chat_id từ dữ liệu
-                'text'    => $response_text,
-            ]);
+                // Gửi tin nhắn sử dụng chat_id lấy từ dữ liệu
+                $message = $this->bot->sendMessage([
+                    'chat_id' => $chatId, // Lấy chat_id từ dữ liệu
+                    'text'    => $response_text,
+                ]);
+            } else {
+                \Log::error('No message in the data', $data);
+                return response()->json(['error' => 'No message found in the update'], 400);
+            }
         } catch (\Exception $e) {
             \Log::error('Error sending message: ' . $e->getMessage());
         }
