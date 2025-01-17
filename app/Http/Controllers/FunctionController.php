@@ -87,9 +87,12 @@ class FunctionController extends Controller
         return response()->json($message);
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function sendMediaGroup($imageUrls, $chat_id)
+    public function sendMediaGroup($imageUrls, $data)
     {
         try {
+            // Lấy chat_id từ dữ liệu nhận được từ webhook
+            $chatId = $data['message']['chat']['id'];
+
             // Giới hạn chỉ lấy 10 hình ảnh đầu tiên nếu có nhiều hơn
             $imageUrls = array_slice($imageUrls, 0, 10);
 
@@ -102,9 +105,9 @@ class FunctionController extends Controller
                 ];
             }
 
-            // Gửi nhóm ảnh qua API bot, sử dụng chat_id được truyền vào
+            // Gửi nhóm ảnh qua API bot, sử dụng chat_id lấy từ dữ liệu
             $message = $this->bot->sendMediaGroup([
-                'chat_id' => $chat_id, // Dùng $chat_id được truyền vào
+                'chat_id' => $chatId, // Lấy chat_id từ dữ liệu
                 'media' => $media,
             ]);
         } catch (Exception $e) {
@@ -117,12 +120,15 @@ class FunctionController extends Controller
     }
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function sendMessage($response_text, $chat_id)
+    public function sendMessage($response_text, $data)
     {
         try {
-            // Gửi tin nhắn sử dụng chat_id được truyền vào
+            // Lấy chat_id từ dữ liệu nhận được từ webhook
+            $chatId = $data['message']['chat']['id'];
+
+            // Gửi tin nhắn sử dụng chat_id lấy từ dữ liệu
             $message = $this->bot->sendMessage([
-                'chat_id' => $chat_id, // Dùng $chat_id được truyền vào
+                'chat_id' => $chatId, // Lấy chat_id từ dữ liệu
                 'text'    => $response_text,
             ]);
         } catch (\Exception $e) {
