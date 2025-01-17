@@ -5,6 +5,8 @@ use App\Http\Controllers\FunctionController;
 use App\Http\Controllers\TelegramController;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use App\Http\Controllers\VideoController;
+
 
 
 Route::get('/', function () {
@@ -22,6 +24,13 @@ Route::get('/test', function () {
 
 Route::get('/lucky-number', function () {
     return view('luckynumber');
+});
+
+Route::get('/quaythuong', function () {
+    return view('luckynumber/quaythuong');
+});
+Route::get('/quay-thuong', function () {
+    return view('luckynumber/quay-thuong');
 });
 
 Route::post('/getDownloadLink',[FunctionController::class,'getDownloadLink'])->name('getDownloadLink')
@@ -59,3 +68,7 @@ Route::get('sendMediaGroup', [App\Http\Controllers\TelegramController::class, 's
 Route::post('/telegram-message-webhook',[FunctionController::class,'telegramDownload'])->name('telegramDownload');
 
 // Route::post('/luckynumber',[FunctionController::class,'luckynumber'])->withoutMiddleware([VerifyCsrfToken::class]);
+
+Route::post('/get-facebook-video-url', [VideoController::class, 'getFacebookVideoUrl'])->withoutMiddleware([VerifyCsrfToken::class]);
+
+

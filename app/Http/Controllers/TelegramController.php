@@ -13,10 +13,10 @@ class TelegramController extends Controller
     private $message_text;
     private $chat_id = 5047537302;
     //+++++++++++++++++++++++++++++++++++++++
-    public function __construct()
-    {
-        $this->bot = new TeleBot(env('TELEGRAM_BOT_TOKEN'));
-    }
+    // public function __construct()
+    // {
+    //     $this->bot = new TeleBot(env('TELEGRAM_BOT_TOKEN'));
+    // }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function index()
     {
