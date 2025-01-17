@@ -192,7 +192,7 @@ class FunctionController extends Controller
             $chatId = $data['message']['chat']['id']; // Lấy chat_id của người dùng
 
             // Gửi lại chat_id cho người dùng
-            $this->sendMessage("Id của bạn là: $chatId", $chatId);
+            // $this->sendMessage("Id của bạn là: $chatId", $chatId);
 
             // Kiểm tra nếu tin nhắn là một URL hợp lệ (URL video từ TikTok)
             if (filter_var($this->message_text, FILTER_VALIDATE_URL)) {
