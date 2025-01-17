@@ -74,18 +74,18 @@ class FunctionController extends Controller
     }
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function sendVideo($videoUrl)
-    {
-        try {
-            $message = $this->bot->sendVideo([
-                'chat_id' => $this->chat_id,
-                'video'   => $videoUrl, // Sử dụng đường dẫn video nhận được từ TikTok
-            ]);
-        } catch (Exception $e) {
-            $message = 'Message: ' . $e->getMessage();
-        }
-        return response()->json($message);
-    }
+    // public function sendVideo($videoUrl)
+    // {
+    //     try {
+    //         $message = $this->bot->sendVideo([
+    //             'chat_id' => $this->chat_id,
+    //             'video'   => $videoUrl, // Sử dụng đường dẫn video nhận được từ TikTok
+    //         ]);
+    //     } catch (Exception $e) {
+    //         $message = 'Message: ' . $e->getMessage();
+    //     }
+    //     return response()->json($message);
+    // }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // public function sendMediaGroup($imageUrls)
     // {
@@ -133,6 +133,21 @@ class FunctionController extends Controller
     //     }
     // }
 
+    public function sendVideo($videoUrl, $chatId)
+    {
+        try {
+            // Gửi video qua API bot Telegram
+            $message = $this->bot->sendVideo([
+                'chat_id' => $chatId,  // Sử dụng chat_id từ webhook
+                'video'   => $videoUrl, // Đường dẫn video nhận được từ TikTok
+            ]);
+        } catch (\Exception $e) {
+            $message = 'Message: ' . $e->getMessage();
+        }
+        
+        // Trả về phản hồi JSON
+        return response()->json($message);
+    }
     // Gửi nhóm hình ảnh/media
     protected function sendMediaGroup($imageUrls, $chatId)
     {
