@@ -152,6 +152,10 @@ public function sendMessage($response_text, $data)
         try {
             $data = $request->all();
 
+            // Log dữ liệu để kiểm tra cấu trúc của webhook
+            \Log::info('Webhook Data:', $data);
+
+            return $data;
             // Kiểm tra xem tin nhắn có chứa 'text' không
             if (!isset($data['message']['text'])) {
                 return response()->json(['error' => 'Invalid data'], 400);
