@@ -207,7 +207,9 @@ class FunctionController extends Controller
 
             // Kiểm tra xem tin nhắn có chứa 'text' không
             if (!isset($data['message']['text'])) {
-                return response()->json(['error' => 'Invalid data'], 400);
+                // Gửi lại tin nhắn yêu cầu gửi một URL hợp lệ
+                $this->sendMessage("Vui lòng gửi một URL hợp lệ.", $chatId);
+                return response()->json(['status' => 'success'], 200);
             }
 
             // Lấy message_text (URL) từ tin nhắn người dùng
