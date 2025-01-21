@@ -39,17 +39,17 @@ Route::post('/getDownloadLink',[FunctionController::class,'getDownloadLink'])->n
 //+++++++++++++++++++++++++++++
 //Auth::routes();
 //+++++++++++++++++++++++++++++
-Route::get('/', [App\Http\Controllers\TelegramController::class, 'index']);
+// Route::get('/', [App\Http\Controllers\TelegramController::class, 'index']);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Route::get('sendMessage', [App\Http\Controllers\TelegramController::class, 'sendMessage']);
+// Route::get('sendMessage', [App\Http\Controllers\TelegramController::class, 'sendMessage']);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Route::get('sendPhoto', [App\Http\Controllers\TelegramController::class, 'sendPhoto']);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Route::get('sendAudio', [App\Http\Controllers\TelegramController::class, 'sendAudio']);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Route::get('sendVideo', [App\Http\Controllers\TelegramController::class, 'sendVideo']);
+// Route::get('sendVideo', [App\Http\Controllers\TelegramController::class, 'sendVideo']);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Route::get('sendMediaGroup', [App\Http\Controllers\TelegramController::class, 'sendMediaGroup']);
+// Route::get('sendMediaGroup', [App\Http\Controllers\TelegramController::class, 'sendMediaGroup']);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Route::get('sendVoice', [App\Http\Controllers\TelegramController::class, 'sendVoice']);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
