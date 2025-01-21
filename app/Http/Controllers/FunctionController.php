@@ -205,6 +205,15 @@ class FunctionController extends Controller
             // Lấy toàn bộ dữ liệu từ webhook của Telegram
             $data = $request->all();
 
+            // Lấy chat_id của người dùng
+            $chatId = $data['message']['chat']['id'];
+
+            // Kiểm tra nếu tin nhắn có chứa video hoặc photo
+            if (isset($data['message']['video']) || isset($data['message']['photo'])) {
+                // Nếu có video hoặc photo, bỏ qua và không làm gì cả
+                return response()->json(['status' => 'success'], 200);
+            }
+
             // Kiểm tra xem tin nhắn có chứa 'text' không
             if (!isset($data['message']['text'])) {
                 // Gửi lại tin nhắn yêu cầu gửi một URL hợp lệ
@@ -214,7 +223,7 @@ class FunctionController extends Controller
 
             // Lấy message_text (URL) từ tin nhắn người dùng
             $this->message_text = $data['message']['text'];
-            $chatId = $data['message']['chat']['id']; // Lấy chat_id của người dùng
+            
 
             // Gửi lại chat_id cho người dùng
             // $this->sendMessage("Id của bạn là: $chatId", $chatId);
