@@ -15,7 +15,7 @@
       justify-content: center;
       min-height: 100vh;
       background-color: #444; /* Màu nền mặc định */
-      /* background-image: url('https://beautygreen.vn/wp-content/uploads/2025/01/z6204617583625_7dfcbf9fdab3f20df4059c77d40aedc0.jpg'); Thay đường dẫn ảnh tại đây */
+      background-image: url('https://beautygreen.vn/wp-content/uploads/2025/01/z6204617583625_7dfcbf9fdab3f20df4059c77d40aedc0.jpg'); Thay đường dẫn ảnh tại đây
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
