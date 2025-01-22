@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bóng Quay Thưởng</title>
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%; /* Đảm bảo rằng cả html và body đều có chiều cao 100% */
+    }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -15,10 +20,11 @@
       justify-content: center;
       min-height: 100vh;
       background-color: #444; /* Màu nền mặc định */
-      background-image: url('https://beautygreen.vn/wp-content/uploads/2025/01/z6204617583625_7dfcbf9fdab3f20df4059c77d40aedc0.jpg'); Thay đường dẫn ảnh tại đây
+      background-image: url('{{asset('assets/images/1.jpg')}}'); Thay đường dẫn ảnh tại đây
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      background-attachment: fixed; /* Giữ nền cố định khi cuộn trang */
     }
 
     /* Dùng màu nền khi màn hình quá lớn */
@@ -136,8 +142,8 @@
   </div>
 
   <!-- 4 ảnh cố định -->
-  <img class="corner-image top-left" src="http://wp-beautygreen.test:81/wp-content/plugins/devvn-tet-holiday/images/left-1.png" alt="Top Left">
-  <img class="corner-image top-right" src="http://wp-beautygreen.test:81/wp-content/plugins/devvn-tet-holiday/images/right-1.png" alt="Top Right">
+  <img class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left">
+  <img class="corner-image top-right" src="{{asset('assets/images/right-1.png')}}" alt="Top Right">
   <!-- <img class="corner-image bottom-left" src="http://example.com/image3.png" alt="Bottom Left">
   <img class="corner-image bottom-right" src="http://example.com/image4.png" alt="Bottom Right"> -->
 
