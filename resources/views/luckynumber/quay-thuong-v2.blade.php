@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bóng Quay Thưởng</title>
+  <title>BeautyGreen - Bóng Quay Thưởng</title>
   <style>
     html, body {
       margin: 0;
@@ -143,8 +143,8 @@
   </div>
 
   <!-- 4 ảnh cố định -->
-  <img class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left">
-  <img class="corner-image top-right" src="{{asset('assets/images/right-1.png')}}" alt="Top Right">
+  <a href="{{route('quay-thuong-v2')}}"><img class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left"></a>
+  <a href="{{route('quaythuong-v2')}}"><img class="corner-image top-right" src="{{asset('assets/images/right-1.png')}}" alt="Top Right"></a>
   <!-- <img class="corner-image bottom-left" src="http://example.com/image3.png" alt="Bottom Left">
   <img class="corner-image bottom-right" src="http://example.com/image4.png" alt="Bottom Right"> -->
 
@@ -260,5 +260,6 @@
         }
     }
   </script>
+  <a href="{{route('quaythuong')}}"><p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p></a>
 </body>
 </html>

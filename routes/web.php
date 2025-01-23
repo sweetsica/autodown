@@ -28,16 +28,17 @@ Route::get('/lucky-number', function () {
 
 Route::get('/quaythuong', function () {
     return view('luckynumber/quaythuong');
-});
+})->name('quaythuong');
 Route::get('/quaythuong-v2', function () {
     return view('luckynumber/quaythuong-v2');
-});
+})->name('quaythuong-v2');
+
 Route::get('/quay-thuong', function () {
     return view('luckynumber/quay-thuong');
 });
 Route::get('/quay-thuong-v2', function () {
     return view('luckynumber/quay-thuong-v2');
-});
+})->name('quay-thuong-v2');
 
 Route::post('/getDownloadLink',[FunctionController::class,'getDownloadLink'])->name('getDownloadLink')
 ->withoutMiddleware([VerifyCsrfToken::class]);
