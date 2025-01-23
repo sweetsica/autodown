@@ -20,7 +20,7 @@
       justify-content: center;
       min-height: 100vh;
       background-color: #444; /* Màu nền mặc định */
-      background-image: url('{{asset('assets/images/1.jpg')}}'); Thay đường dẫn ảnh tại đây
+      background-image: url('{{asset('assets/images/Rectangle 1.jpg')}}'); Thay đường dẫn ảnh tại đây
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
