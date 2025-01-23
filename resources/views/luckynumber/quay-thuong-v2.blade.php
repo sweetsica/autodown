@@ -11,6 +11,10 @@
       padding: 0;
       height: 100%; /* Đảm bảo rằng cả html và body đều có chiều cao 100% */
     }
+    a {
+      text-decoration: none; /* Loại bỏ gạch chân */
+      color: white; /* Thay đổi màu chữ thành màu xám đậm (bạn có thể tùy chỉnh màu này) */
+    }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
