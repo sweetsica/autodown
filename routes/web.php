@@ -40,11 +40,15 @@ Route::get('/quaythuong-binhthuong', function () {
 
 Route::get('/quaythuong-daugoi1', function () {
     return view('luckynumber/quaythuong-daugoi1');
-})->name('quaythuong-daugoi1');//dưới 5 giải dầu gội 1
+})->name('quaythuong-daugoi1');//dưới giải dầu gội 1
 
 Route::get('/quaythuong-daugoi2', function () {
     return view('luckynumber/quaythuong-daugoi2');
-})->name('quaythuong-daugoi2');//dưới 2 giải dầu gội 2 
+})->name('quaythuong-daugoi2');//dưới giải dầu gội 2 
+
+Route::get('/quaythuong-daugoi3', function () {
+    return view('luckynumber/quaythuong-daugoi3');
+})->name('quaythuong-daugoi3');//dưới giải dầu gội 3 
 
 Route::get('/quay-thuong', function () {
     return view('luckynumber/quay-thuong');

@@ -41,7 +41,7 @@
     let currentResult = 0;
     let spinning = false;
     const results = [];
-    const predefined = [1291,769]; // Hai giá trị cố định
+    const predefined = [30,130]; // Hai giá trị cố định
     const finalOrder = Array.from({ length: 5 }, (_, i) => i); // Mảng từ 0 đến 4 để xáo trộn
     let currentStep = 0;
 
