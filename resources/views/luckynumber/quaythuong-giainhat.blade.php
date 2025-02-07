@@ -23,7 +23,7 @@
   </div>
 
   <!-- 4 ảnh cố định -->
-  <a href="{{route('quay-thuong-v2')}}"><img class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left"></a>
+  <a href="{{route('quaythuong-giainhat')}}"><img class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left"></a>
   <a href="{{route('quaythuong-binhthuong')}}"><img class="corner-image top-right" src="{{asset('assets/images/right-1.png')}}" alt="Top Right"></a>
   <!-- <img class="corner-image bottom-left" src="http://example.com/image3.png" alt="Bottom Left">
   <img class="corner-image bottom-right" src="http://example.com/image4.png" alt="Bottom Right"> -->
