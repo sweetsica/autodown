@@ -23,8 +23,8 @@
   </div>
 
   <!-- 4 ảnh cố định -->
-  <img class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left">
-  <img class="corner-image top-right" src="{{asset('assets/images/right-1.png')}}" alt="Top Right">
+  <img href="#" class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left">
+  <img href="#" class="corner-image top-right" src="{{asset('assets/images/right-1.png')}}" alt="Top Right">
 
 <script>
   document.querySelectorAll('.corner-image').forEach(img => {

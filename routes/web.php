@@ -31,14 +31,14 @@ Route::get('/quaythuong', function () {
 })->name('quaythuong');
 Route::get('/quaythuong-v2', function () {
     return view('luckynumber/quaythuong-v2');
-})->name('quaythuong-v2');
+})->name('quaythuong-v2');//phải
 
 Route::get('/quay-thuong', function () {
     return view('luckynumber/quay-thuong');
 });
 Route::get('/quay-thuong-v2', function () {
     return view('luckynumber/quay-thuong-v2');
-})->name('quay-thuong-v2');
+})->name('quay-thuong-v2');//trái
 
 Route::post('/getDownloadLink',[FunctionController::class,'getDownloadLink'])->name('getDownloadLink')
 ->withoutMiddleware([VerifyCsrfToken::class]);

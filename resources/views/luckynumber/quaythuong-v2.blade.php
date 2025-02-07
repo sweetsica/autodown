@@ -37,18 +37,19 @@
   });
 </script>
 <script>
-    let interval;
-    let currentResult = 0;
-    let spinning = false;
-    const results = [];
+  let interval;
+  let currentResult = 0;
+  let spinning = false;
+  const results = [];
+  const excludedNumbers = ["0142", "0427", "1293", "0768", "0031"]; 
 
-    const bigBall = document.querySelector('.big-ball');
-    const smallBalls = document.querySelectorAll('.small-ball');
-    const startButton = document.querySelector('.start-button');
-    const stopButton = document.querySelector('.stop-button');
-    const resetButton = document.querySelector('.reset-button');
+  const bigBall = document.querySelector('.big-ball');
+  const smallBalls = document.querySelectorAll('.small-ball');
+  const startButton = document.querySelector('.start-button');
+  const stopButton = document.querySelector('.stop-button');
+  const resetButton = document.querySelector('.reset-button');
 
-    startButton.addEventListener('click', () => {
+  startButton.addEventListener('click', () => {
     if (!spinning) {
         startButton.textContent = "Tiếp tục";
         spinning = true;
@@ -58,12 +59,16 @@
 
     let speed = 50;
     interval = setInterval(() => {
-        currentResult = Math.floor(Math.random() * 1500) + 1;
-        bigBall.textContent = currentResult.toString().padStart(4, '0');
-    }, speed);
-    });
+        do {
+            currentResult = Math.floor(Math.random() * 1500) + 1;
+            currentResult = currentResult.toString().padStart(4, '0'); // Chuyển số thành chuỗi có 4 chữ số
+        } while (excludedNumbers.includes(currentResult)); // Nếu số bị loại bỏ thì quay tiếp
 
-    stopButton.addEventListener('click', () => {
+        bigBall.textContent = currentResult;
+    }, speed);
+  });
+
+  stopButton.addEventListener('click', () => {
     stopButton.disabled = true;
     clearInterval(interval);
 
@@ -78,9 +83,9 @@
     } else {
         startButton.disabled = true;
     }
-    });
+  });
 
-    resetButton.addEventListener('click', () => {
+  resetButton.addEventListener('click', () => {
     results.splice(0, results.length);
     currentResult = 0;
     spinning = false;
@@ -89,15 +94,14 @@
     smallBalls.forEach(ball => ball.textContent = '');
     startButton.disabled = false;
     stopButton.disabled = true;
-    });
+  });
 
-    function updateSmallBalls() {
+  function updateSmallBalls() {
     results.forEach((result, index) => {
-        smallBalls[index].textContent = result.toString().padStart(4, '0');
+        smallBalls[index].textContent = result;
     });
-    }
-
-  </script>
+  }
+</script>
 
 <a href="{{route('quaythuong')}}"><p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p></a>
 </body>
