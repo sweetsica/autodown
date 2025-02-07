@@ -140,15 +140,17 @@
         }
     }
   </script>
-  <a href="{{route('quaythuong-daugoi1')}}" style="display:inline-block;">
-    <p style="text-align:center; margin: 0;">An khang</p>
-  </a> - 
-  <a href="{{route('quaythuong-daugoi2')}}" style="display:inline-block;">
-      <p style="text-align:center; margin: 0;">Thịnh vượng</p>
-  </a> - 
-  <a href="{{route('quaythuong-daugoi3')}}" style="display:inline-block;">
-      <p style="text-align:center; margin: 0;">Vạn sự như ý</p>
-  </a>
-  <a href="#"><p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p></a>
+  <div style="padding-top:4%">
+    <a href="{{route('quaythuong-daugoi1')}}" style="display:inline-block;">
+      <p style="text-align:center; margin: 0;">An khang</p>
+    </a> - 
+    <a href="{{route('quaythuong-daugoi2')}}" style="display:inline-block;">
+        <p style="text-align:center; margin: 0;">Thịnh vượng</p>
+    </a> - 
+    <a href="{{route('quaythuong-daugoi3')}}" style="display:inline-block;">
+        <p style="text-align:center; margin: 0;">Vạn sự như ý</p>
+    </a>
+    <a href="#"><p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p></a>
+  </div>
 </body>
 </html>
