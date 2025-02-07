@@ -23,8 +23,8 @@
   </div>
 
   <!-- 4 ảnh cố định -->
-  <a href="{{route('quay-thuong-v2')}}"><img class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left"></a>
-  <a href="{{route('quaythuong-v2')}}"><img class="corner-image top-right" src="{{asset('assets/images/right-1.png')}}" alt="Top Right"></a>
+  <a href="{{route('quaythuong-giainhat')}}"><img class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left"></a>
+  <a href="{{route('quaythuong-binhthuong')}}"><img class="corner-image top-right" src="{{asset('assets/images/right-1.png')}}" alt="Top Right"></a>
   <!-- <img class="corner-image bottom-left" src="http://example.com/image3.png" alt="Bottom Left">
   <img class="corner-image bottom-right" src="http://example.com/image4.png" alt="Bottom Right"> -->
 
@@ -41,7 +41,7 @@
   let currentResult = 0;
   let spinning = false;
   const results = [];
-  const excludedNumbers = ["0142", "0427", "1293", "0768", "0031","148","423","1291","769","30"]; 
+  const excludedNumbers = ["0142", "0427", "1293", "0768", "0031","148","423","1291","769","30","183","130"]; //Dưới - random
 
   const bigBall = document.querySelector('.big-ball');
   const smallBalls = document.querySelectorAll('.small-ball');
@@ -102,7 +102,7 @@
     });
   }
 </script>
-
+<a href="{{route('quaythuong-giainhat')}}"><p style='text-align:center'>An khang</p></a> - </a><a href="{{route('quaythuong-daugoi1')}}"><p style='text-align:center'>Thịnh vượng</p></a> - </a><a href="{{route('quaythuong-daugoi2')}}"><p style='text-align:center'>Vạn sự như ý</p></a>
 <a href="{{route('quaythuong-v22')}}"><p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p></a>
 </body>
 </html>

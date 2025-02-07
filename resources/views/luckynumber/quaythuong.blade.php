@@ -96,7 +96,7 @@
     }
 
   </script>
-
+<a href="{{route('quaythuong')}}"><p style='text-align:center'>An khang</p></a> - </a><a href="{{route('quaythuong')}}"><p style='text-align:center'>Thịnh vượng</p></a> - </a><a href="{{route('quaythuong')}}"><p style='text-align:center'>Vạn sự như ý</p></a>
 <p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p>
 </body>
 </html>

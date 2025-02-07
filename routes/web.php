@@ -30,17 +30,21 @@ Route::get('/quaythuong', function () {
     return view('luckynumber/quaythuong');
 })->name('quaythuong');
 
-Route::get('/quay-thuong-v2', function () {
-    return view('luckynumber/quay-thuong-v2');
-})->name('quay-thuong-v2');//trái 5 giải nhất
+Route::get('/quay-thuong-giainhat', function () {
+    return view('luckynumber/quaythuong-giainhat');
+})->name('quaythuong-giainhat');//trái 5 giải nhất
 
-Route::get('/quaythuong-v2', function () {
+Route::get('/quaythuong-binhthuong', function () {
     return view('luckynumber/quaythuong-v2');
-})->name('quaythuong-v2');//phải
+})->name('quaythuong-binhthuong');//phải
 
-Route::get('/quaythuong-v22', function () {
-    return view('luckynumber/quaythuong-v2');
-})->name('quaythuong-v22');//dưới 5 giải dầu gội
+Route::get('/quaythuong-daugoi1', function () {
+    return view('luckynumber/quaythuong-daugoi1');
+})->name('quaythuong-daugoi1');//dưới 5 giải dầu gội 1
+
+Route::get('/quaythuong-daugoi2', function () {
+    return view('luckynumber/quaythuong-daugoi2');
+})->name('quaythuong-daugoi2');//dưới 2 giải dầu gội 2 
 
 Route::get('/quay-thuong', function () {
     return view('luckynumber/quay-thuong');

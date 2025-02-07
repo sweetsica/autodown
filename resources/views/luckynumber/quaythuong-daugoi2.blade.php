@@ -21,7 +21,7 @@
     <button class="stop-button" disabled>Dừng lại</button>
     <button class="reset-button">Tạo mới</button>
   </div>
-
+ 
   <!-- 4 ảnh cố định -->
   <a href="{{route('quaythuong-giainhat')}}"><img class="corner-image top-left" src="{{asset('assets/images/left-1.png')}}" alt="Top Left"></a>
   <a href="{{route('quaythuong-binhthuong')}}"><img class="corner-image top-right" src="{{asset('assets/images/right-1.png')}}" alt="Top Right"></a>
@@ -41,7 +41,7 @@
     let currentResult = 0;
     let spinning = false;
     const results = [];
-    const predefined = [142,427,1293,768,31]; // Giải nhất trái
+    const predefined = [183,130]; // Hai giá trị cố định
     const finalOrder = Array.from({ length: 5 }, (_, i) => i); // Mảng từ 0 đến 4 để xáo trộn
     let currentStep = 0;
 
@@ -141,6 +141,6 @@
     }
   </script>
   <a href="{{route('quaythuong-giainhat')}}"><p style='text-align:center'>An khang</p></a> - </a><a href="{{route('quaythuong-daugoi1')}}"><p style='text-align:center'>Thịnh vượng</p></a> - </a><a href="{{route('quaythuong-daugoi2')}}"><p style='text-align:center'>Vạn sự như ý</p></a>
-  <a href="#"><p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p></a>
+  <a href="{{route('quaythuong-v22')}}"><p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p></a>
 </body>
 </html>
