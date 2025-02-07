@@ -103,6 +103,6 @@
   }
 </script>
 
-<a href="{{route('quaythuong')}}"><p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p></a>
+<a href="{{route('quaythuong-v22')}}"><p style='text-align:center'>Lucky Number - Quay số trúng thưởng <br>Made by S @ 2025</p></a>
 </body>
 </html>
