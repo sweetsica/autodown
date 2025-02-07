@@ -19,7 +19,7 @@
     </div>
     <button class="start-button">Bắt đầu</button>
     <button class="stop-button" disabled>Dừng lại</button>
-    <button class="reset-button">Tạo mới</button>
+    <!-- <button class="reset-button">Tạo mới</button> -->
   </div>
  
   <!-- 4 ảnh cố định -->
