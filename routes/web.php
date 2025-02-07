@@ -30,7 +30,7 @@ Route::get('/quaythuong', function () {
     return view('luckynumber/quaythuong');
 })->name('quaythuong');
 
-Route::get('/quay-thuong-giainhat', function () {
+Route::get('/quaythuong-giainhat', function () {
     return view('luckynumber/quaythuong-giainhat');
 })->name('quaythuong-giainhat');//trái 5 giải nhất
 
