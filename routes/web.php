@@ -35,7 +35,7 @@ Route::get('/quaythuong-giainhat', function () {
 })->name('quaythuong-giainhat');//trái 5 giải nhất
 
 Route::get('/quaythuong-binhthuong', function () {
-    return view('luckynumber/quaythuong-v2');
+    return view('luckynumber/quaythuong-binhthuong');
 })->name('quaythuong-binhthuong');//phải
 
 Route::get('/quaythuong-daugoi1', function () {
