@@ -33,10 +33,12 @@ Route::get('/quaythuong', function () {
 Route::get('/quay-thuong-v2', function () {
     return view('luckynumber/quay-thuong-v2');
 })->name('quay-thuong-v2');//trái 5 giải nhất
+
 Route::get('/quaythuong-v2', function () {
     return view('luckynumber/quaythuong-v2');
 })->name('quaythuong-v2');//phải
-Route::get('/quaythuong-v2', function () {
+
+Route::get('/quaythuong-v22', function () {
     return view('luckynumber/quaythuong-v2');
 })->name('quaythuong-v22');//dưới 5 giải dầu gội
 
