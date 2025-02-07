@@ -41,7 +41,7 @@
   let currentResult = 0;
   let spinning = false;
   const results = [];
-  const excludedNumbers = ["0142", "0427", "1293", "0768", "0031"]; 
+  const excludedNumbers = ["0142", "0427", "1293", "0768", "0031","148","423","1291","769","30"]; 
 
   const bigBall = document.querySelector('.big-ball');
   const smallBalls = document.querySelectorAll('.small-ball');
