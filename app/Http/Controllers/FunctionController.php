@@ -176,6 +176,8 @@ class FunctionController extends Controller
                 return response()->json(['status' => 'success'], 200);
             }
 
+            $this->sendMessage($this->message_text, $chatId);
+            dd($this->message_text);
             // Lấy message_text (URL) từ tin nhắn người dùng
             $this->message_text = $data['message']['text'];
 
