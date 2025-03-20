@@ -76,66 +76,6 @@ class FunctionController extends Controller
     }
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // public function sendVideo($videoUrl)
-    // {
-    //     try {
-    //         $message = $this->bot->sendVideo([
-    //             'chat_id' => $this->chat_id,
-    //             'video'   => $videoUrl, // Sử dụng đường dẫn video nhận được từ TikTok
-    //         ]);
-    //     } catch (Exception $e) {
-    //         $message = 'Message: ' . $e->getMessage();
-    //     }
-    //     return response()->json($message);
-    // }
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // public function sendMediaGroup($imageUrls)
-    // {
-    //     try {
-    //         // Chat ID của người nhận hoặc nhóm
-    //         $chatId = $this->chat_id; // Thay bằng giá trị chat ID phù hợp
-
-    //         // Giới hạn chỉ lấy 4 hình ảnh đầu tiên nếu có nhiều hơn 4
-    //         $imageUrls = array_slice($imageUrls, 0, 10);
-
-    //         // Tạo nhóm ảnh từ các URL
-    //         $media = [];
-    //         foreach ($imageUrls as $url) {
-    //             $media[] = [
-    //                 'type' => 'photo',
-    //                 'media' => $url, // Đường dẫn ảnh
-    //             ];
-    //         }
-
-    //         // Gửi nhóm ảnh qua API bot
-    //         $message = $this->bot->sendMediaGroup([
-    //             'chat_id' => $chatId,
-    //             'media' => $media,
-    //         ]);
-    //     } catch (Exception $e) {
-    //         // Bắt lỗi nếu có
-    //         $message = 'Message: ' . $e->getMessage();
-    //     }
-
-    //     // Trả về phản hồi JSON
-    //     return response()->json($message);
-    // }
-
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // public function sendMessage($response_text)
-    // {
-    //     try {
-    //         $message = $this->bot->sendMessage([
-    //             'chat_id' => $this->chat_id,
-    //             'text'    => $response_text,
-    //         ]);
-    //         // \Log::info('Message sent: ' . json_encode($message));
-    //     } catch (\Exception $e) {
-    //         \Log::error('Error sending message: ' . $e->getMessage());
-    //     }
-    // }
-
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Gửi video
     public function sendVideo($videoUrl, $chatId)
     {
@@ -210,51 +150,65 @@ class FunctionController extends Controller
 
             // Kiểm tra nếu tin nhắn có chứa video hoặc photo
             if (isset($data['message']['video']) || isset($data['message']['photo'])) {
-                // Nếu có video hoặc photo, bỏ qua và không làm gì cả
                 return response()->json(['status' => 'success'], 200);
             }
 
             // Kiểm tra xem tin nhắn có chứa 'text' không
             if (!isset($data['message']['text'])) {
-                // Gửi lại tin nhắn yêu cầu gửi một URL hợp lệ
                 $this->sendMessage("Vui lòng gửi một URL hợp lệ.", $chatId);
                 return response()->json(['status' => 'success'], 200);
             }
 
             // Lấy message_text (URL) từ tin nhắn người dùng
             $this->message_text = $data['message']['text'];
-            
 
-            // Gửi lại chat_id cho người dùng
-            // $this->sendMessage("Id của bạn là: $chatId", $chatId);
-
-            // Kiểm tra nếu tin nhắn là một URL hợp lệ (URL video từ TikTok)
-            if (filter_var($this->message_text, FILTER_VALIDATE_URL)) {
-                // Gọi hàm getDownloadLink để lấy thông tin tải video hoặc nhóm ảnh
-                $result = $this->tiktokService->getVideoDownloadLink($this->message_text);
-
-                // Kiểm tra kết quả và gửi video hoặc nhóm ảnh tương ứng
-                if (isset($result['image_urls']) && !empty($result['image_urls'])) {
-                    // Gửi nhóm ảnh nếu có dữ liệu hình ảnh
-                    $this->sendMediaGroup($result['image_urls'], $chatId);
-                } elseif (isset($result['download_url'])) {
-                    // Gửi video nếu có URL tải video
-                    $this->sendVideo($result['download_url'], $chatId);
-                } else {
-                    // Nếu không có dữ liệu hợp lệ
-                    $this->sendMessage("Không thể lấy dữ liệu từ URL này.", $chatId);
-                }
-            } else {
-                // Nếu không phải là URL hợp lệ
+            // Kiểm tra nếu tin nhắn là một URL hợp lệ
+            if (!filter_var($this->message_text, FILTER_VALIDATE_URL)) {
                 $this->sendMessage("Vui lòng gửi một URL hợp lệ.", $chatId);
+                return response()->json(['status' => 'success'], 200);
             }
 
-            return response()->json(['status' => 'success'], 200);
+            // Xử lý theo từng nền tảng
+            if (str_contains($this->message_text, 'facebook.com')) {
+                // Case 1: Xử lý Facebook
+                $this->sendMessage("Facebook link đã nhận, đang xử lý...", $chatId);
+                // Gọi service xử lý Facebook (giả sử bạn có service riêng)
+                $result = $this->facebookService->getDownloadLink($this->message_text);
+                $this->sendVideo($result['mediaUrls'], $chatId);
+
+                return response()->json(['status' => 'facebook_success'], 200);
+            } elseif (str_contains($this->message_text, 'instagram.com')) {
+                // Case 2: Xử lý Instagram
+                $this->sendMessage("Instagram link đã nhận, đang xử lý...", $chatId);
+                // Gọi service xử lý Instagram (giả sử bạn có service riêng)
+                $result = $this->instagramService->getDownloadLink($this->message_text);
+                $this->sendVideo($result['mediaUrls'], $chatId);
+
+                return response()->json(['status' => 'instagram_success'], 200);
+            } elseif (str_contains($this->message_text, 'tiktok.com')) {
+                // Case 3: Xử lý TikTok (giữ nguyên logic cũ)
+                $result = $this->tiktokService->getVideoDownloadLink($this->message_text);
+
+                if (isset($result['image_urls']) && !empty($result['image_urls'])) {
+                    $this->sendMediaGroup($result['image_urls'], $chatId);
+                } elseif (isset($result['download_url'])) {
+                    $this->sendVideo($result['download_url'], $chatId);
+                } else {
+                    $this->sendMessage("Không thể lấy dữ liệu từ URL này.", $chatId);
+                }
+
+                return response()->json(['status' => 'success'], 200);
+            } else {
+                // URL không thuộc ba nền tảng trên
+                $this->sendMessage("Vui lòng gửi một URL từ Facebook, Instagram hoặc TikTok.", $chatId);
+                return response()->json(['status' => 'invalid_platform'], 200);
+            }
         } catch (\Exception $e) {
             \Log::error('Telegram Webhook Error: ' . $e->getMessage());
             return response()->json(['error' => 'Server error'], 500);
         }
     }
+
 
 
 
