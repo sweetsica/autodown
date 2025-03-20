@@ -6,19 +6,18 @@ use Illuminate\Support\Facades\Http;
 
 class DownloadFacebookService
 {
-    public function getVideoDownloadLink(string $dataUrl)
+    public function getVideoDownloadLink(string $videoUrl)
     {
         try {
             $response = Http::get('https://so9.vn/_next/data/Ws9sag6o1mFO5oEGK7ONq/vi/9downloader/facebook.json', [
-                'url' => $dataUrl,
+                'link' => $videoUrl,
             ]);
-
             if ($response->successful()) {
                 $data = $response->json();
-                if (isset($data['data']['pageProps']['downloadData']['data']['video']) && is_array($data['data']['pageProps']['downloadData']['data']['video'])) {
-                    $mediaUrl = array_values($data['data']['pageProps']['downloadData']['data']['video']);
+                if (isset($data['pageProps']['downloadData']['data']['video'])) {
+                    $mediaUrl = $data['pageProps']['downloadData']['data']['video'];
                     return [
-                        'success' => true,
+                        'status' => true,
                         'mediaUrl' => $mediaUrl,
                     ];
                 } else {
@@ -28,7 +27,6 @@ class DownloadFacebookService
                     ];
                 }
             }
-
             return [
                 'success' => false,
                 'message' => 'Failed to fetch data from API.',

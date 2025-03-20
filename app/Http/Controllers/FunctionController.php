@@ -61,37 +61,25 @@ class FunctionController extends Controller
     // Gọi trực tiếp k qua webhook
     public function getDownloadLink(Request $request)
     {
-        $videoUrl = $request->input('url');
+        // dd($request);
+        $dataUrl = $request->input('url');
 
-        if (empty($videoUrl)) {
-            return response()->json(['success' => false, 'message' => 'Video URL is required.']);
+        if (empty($dataUrl)) {
+            return response()->json(['status' => false, 'message' => 'Không cấp link luôn?']);
         }
 
-        if (str_contains($this->message_text, 'facebook.com')) {
-            $result = $this->facebookService->getVideoDownloadLink($videoUrl);
-            if (isset($result['mediaUrl']) && !empty($result['mediaUrl'])) {
-                // Nếu có hình ảnh, gọi sendMediaGroup
-                return $this->sendMediaGroup($result['mediaUrl']);
-            } else {
-                // Nếu không có hình ảnh, gọi sendVideo
-                return $this->sendVideo($result['download_url']);
-            }
+        if (str_contains($request['url'], 'facebook.com')) {
+            $result = $this->facebookService->getVideoDownloadLink($dataUrl);
+            return $this->sendVideo($result['mediaUrl'],$this->chat_id);
         }
 
-        if (str_contains($this->message_text, 'instagram.com')) {
-            $result = $this->instagramService->getVideoDownloadLink($videoUrl);
-            if (isset($result['mediaUrl']) && !empty($result['mediaUrl'])) {
-                // Nếu có hình ảnh, gọi sendMediaGroup
-                return $this->sendMediaGroup($result['mediaUrl']);
-            } else {
-                // Nếu không có hình ảnh, gọi sendVideo
-                return $this->sendVideo($result['download_url']);
-            }
+        if (str_contains($request['url'], 'instagram.com')) {
+            $result = $this->instagramService->getVideoDownloadLink($dataUrl);
+            return $this->sendVideo($result['mediaUrl'],$this->chat_id);
         }
-
-        if (str_contains($this->message_text, 'tiktok.com')) {
+        if (str_contains($request['url'], 'tiktok.com')) {
             // Gọi TikTokDownloadService để lấy đường dẫn tải video
-            $result = $this->tiktokService->getVideoDownloadLink($videoUrl);
+            $result = $this->tiktokService->getVideoDownloadLink($dataUrl);
 
             // Kiểm tra nếu có dữ liệu image, thì gửi media group, còn không thì gửi video
             if (isset($result['image_urls']) && !empty($result['image_urls'])) {
@@ -203,7 +191,7 @@ class FunctionController extends Controller
                 $this->sendMessage("Facebook link đã nhận, đang xử lý...", $chatId);
                 // Gọi service xử lý Facebook (giả sử bạn có service riêng)
                 $result = $this->facebookService->getDownloadLink($this->message_text);
-                $this->sendVideo($result['mediaUrls'], $chatId);
+                $this->sendVideo($result['mediaUrl'], $chatId);
 
                 return response()->json(['status' => 'facebook_success'], 200);
             } elseif (str_contains($this->message_text, 'instagram.com')) {
@@ -211,7 +199,7 @@ class FunctionController extends Controller
                 $this->sendMessage("Instagram link đã nhận, đang xử lý...", $chatId);
                 // Gọi service xử lý Instagram (giả sử bạn có service riêng)
                 $result = $this->instagramService->getDownloadLink($this->message_text);
-                $this->sendVideo($result['mediaUrls'], $chatId);
+                $this->sendVideo($result['mediaUrl'], $chatId);
 
                 return response()->json(['status' => 'instagram_success'], 200);
             } elseif (str_contains($this->message_text, 'tiktok.com')) {
