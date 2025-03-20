@@ -90,16 +90,17 @@ class FunctionController extends Controller
         }
 
         if (str_contains($this->message_text, 'tiktok.com')) {
-        // Gọi TikTokDownloadService để lấy đường dẫn tải video
-        $result = $this->tiktokService->getVideoDownloadLink($videoUrl);
+            // Gọi TikTokDownloadService để lấy đường dẫn tải video
+            $result = $this->tiktokService->getVideoDownloadLink($videoUrl);
 
-        // Kiểm tra nếu có dữ liệu image, thì gửi media group, còn không thì gửi video
-        if (isset($result['image_urls']) && !empty($result['image_urls'])) {
-            // Nếu có hình ảnh, gọi sendMediaGroup
-            return $this->sendMediaGroup($result['image_urls']);
-        } else {
-            // Nếu không có hình ảnh, gọi sendVideo
-            return $this->sendVideo($result['download_url']);
+            // Kiểm tra nếu có dữ liệu image, thì gửi media group, còn không thì gửi video
+            if (isset($result['image_urls']) && !empty($result['image_urls'])) {
+                // Nếu có hình ảnh, gọi sendMediaGroup
+                return $this->sendMediaGroup($result['image_urls']);
+            } else {
+                // Nếu không có hình ảnh, gọi sendVideo
+                return $this->sendVideo($result['download_url']);
+            }
         }
     }
 
