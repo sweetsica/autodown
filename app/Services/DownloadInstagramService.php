@@ -16,10 +16,10 @@ class DownloadInstagramService
             if ($response->successful()) {
                 $data = $response->json();
                 if (isset($data['data']['pageProps']['downloadData']['data']['video']) && is_array($data['data']['pageProps']['downloadData']['data']['video'])) {
-                    $mediaUrls = array_values($data['data']['pageProps']['downloadData']['data']['video']);
+                    $mediaUrl = array_values($data['data']['pageProps']['downloadData']['data']['video']);
                     return [
                         'success' => true,
-                        'mediaUrls' => $mediaUrls,
+                        'mediaUrl' => $mediaUrl,
                     ];
                 } else {
                     return [

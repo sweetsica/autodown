@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\DownloadFlickrService;
 use App\Services\DownloadTikTokService;
+use App\Services\DownloadFacebookService;
+use App\Services\DownloadInstagramService;
 use WeStacks\TeleBot\TeleBot;
 use Illuminate\Support\Facades\Response;
 use App\Models\LuckyNumber;
@@ -19,10 +21,13 @@ class FunctionController extends Controller
     private $chat_id = 5047537302;
     //+++++++++++++++++++++++++++++++++++++++
 
-    public function __construct(DownloadFlickrService $downloadFlickrService, DownloadTikTokService $tiktokService)
+    public function __construct(DownloadFlickrService $downloadFlickrService, DownloadTikTokService $tiktokService, DownloadFacebookService $facebookService, DownloadInstagramService $instagramService)
     {
         $this->downloadFlickrService = $downloadFlickrService;
         $this->tiktokService = $tiktokService;
+        $this->facebookService = $facebookService;
+        $this->instagramService = $instagramService;
+        //+++++++++++++++++++++++++++++++++++++++
         $this->bot = new TeleBot(env('TELEGRAM_BOT_TOKEN'));
     }
 
@@ -62,6 +67,29 @@ class FunctionController extends Controller
             return response()->json(['success' => false, 'message' => 'Video URL is required.']);
         }
 
+        if (str_contains($this->message_text, 'facebook.com')) {
+            $result = $this->facebookService->getVideoDownloadLink($videoUrl);
+            if (isset($result['mediaUrl']) && !empty($result['mediaUrl'])) {
+                // Nếu có hình ảnh, gọi sendMediaGroup
+                return $this->sendMediaGroup($result['mediaUrl']);
+            } else {
+                // Nếu không có hình ảnh, gọi sendVideo
+                return $this->sendVideo($result['download_url']);
+            }
+        }
+
+        if (str_contains($this->message_text, 'instagram.com')) {
+            $result = $this->instagramService->getVideoDownloadLink($videoUrl);
+            if (isset($result['mediaUrl']) && !empty($result['mediaUrl'])) {
+                // Nếu có hình ảnh, gọi sendMediaGroup
+                return $this->sendMediaGroup($result['mediaUrl']);
+            } else {
+                // Nếu không có hình ảnh, gọi sendVideo
+                return $this->sendVideo($result['download_url']);
+            }
+        }
+
+        if (str_contains($this->message_text, 'tiktok.com')) {
         // Gọi TikTokDownloadService để lấy đường dẫn tải video
         $result = $this->tiktokService->getVideoDownloadLink($videoUrl);
 
@@ -77,13 +105,13 @@ class FunctionController extends Controller
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // Gửi video
-    public function sendVideo($videoUrl, $chatId)
+    public function sendVideo($mediaUrl, $chatId)
     {
         try {
             // Gửi video qua API bot Telegram
             $message = $this->bot->sendVideo([
                 'chat_id' => $chatId,  // Sử dụng chat_id từ webhook
-                'video'   => $videoUrl, // Đường dẫn video nhận được từ TikTok
+                'video'   => $mediaUrl, // Đường dẫn video nhận được từ service
             ]);
         } catch (\Exception $e) {
             $message = 'Message: ' . $e->getMessage();
