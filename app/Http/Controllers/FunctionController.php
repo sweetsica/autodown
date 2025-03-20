@@ -15,6 +15,8 @@ class FunctionController extends Controller
 {
     protected $downloadFlickrService;
     protected $tiktokService;
+    protected $instagramService;
+    protected $facebookService;
     //+++++++++++++++++++++++++++++++++++++++
     private $bot;
     private $message_text;
@@ -84,10 +86,10 @@ class FunctionController extends Controller
             // Kiểm tra nếu có dữ liệu image, thì gửi media group, còn không thì gửi video
             if (isset($result['image_urls']) && !empty($result['image_urls'])) {
                 // Nếu có hình ảnh, gọi sendMediaGroup
-                return $this->sendMediaGroup($result['image_urls']);
+                return $this->sendMediaGroup($result['image_urls'],$this->chat_id);
             } else {
                 // Nếu không có hình ảnh, gọi sendVideo
-                return $this->sendVideo($result['download_url']);
+                return $this->sendVideo($result['download_url'],$this->chat_id);
             }
         }
     }
@@ -176,7 +178,6 @@ class FunctionController extends Controller
                 return response()->json(['status' => 'success'], 200);
             }
 
-            $this->sendMessage($this->message_text, $chatId);
             dd($this->message_text);
             // Lấy message_text (URL) từ tin nhắn người dùng
             $this->message_text = $data['message']['text'];
