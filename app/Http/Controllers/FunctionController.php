@@ -178,7 +178,7 @@ class FunctionController extends Controller
                 return response()->json(['status' => 'success'], 200);
             }
 
-            dd($this->message_text);
+            // dd($this->message_text);
             // Lấy message_text (URL) từ tin nhắn người dùng
             $this->message_text = $data['message']['text'];
 
@@ -191,17 +191,17 @@ class FunctionController extends Controller
             // Xử lý theo từng nền tảng
             if (str_contains($this->message_text, 'facebook.com')) {
                 // Case 1: Xử lý Facebook
-                $this->sendMessage("Facebook link đã nhận, đang xử lý...", $chatId);
+                // $this->sendMessage("Facebook link đã nhận, đang xử lý...", $chatId);
                 // Gọi service xử lý Facebook (giả sử bạn có service riêng)
-                $result = $this->facebookService->getDownloadLink($this->message_text);
+                $result = $this->facebookService->getVideoDownloadLink($this->message_text);
                 $this->sendVideo($result['mediaUrl'], $chatId);
 
                 return response()->json(['status' => 'facebook_success'], 200);
             } elseif (str_contains($this->message_text, 'instagram.com')) {
                 // Case 2: Xử lý Instagram
-                $this->sendMessage("Instagram link đã nhận, đang xử lý...", $chatId);
+                // $this->sendMessage("Instagram link đã nhận, đang xử lý...", $chatId);
                 // Gọi service xử lý Instagram (giả sử bạn có service riêng)
-                $result = $this->instagramService->getDownloadLink($this->message_text);
+                $result = $this->instagramService->getVideoDownloadLink($this->message_text);
                 $this->sendVideo($result['mediaUrl'], $chatId);
 
                 return response()->json(['status' => 'instagram_success'], 200);
