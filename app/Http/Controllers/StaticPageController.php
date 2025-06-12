@@ -14,7 +14,7 @@ class StaticPageController extends Controller
         $response = Http::get($url_forward);
         // $url_hd = $response->json()['link']['Download Video HD'];
         // return $url_hd;
-        dd($response->json());
+        return $response->json();
         // dd($response);
 
         // return redirect()->route('static.index');
