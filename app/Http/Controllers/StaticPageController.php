@@ -11,7 +11,7 @@ class StaticPageController extends Controller
     {
         $url_forward = 'https://medownloader.com/wp-content/themes/twentysixteen/modules/fbdl.php?url='.$request->url().'&token=bjvkjkjkajkajakoqo1292318fdvsja';
         $response = Http::get($url_forward);
-        dd($response->body());
+        dd($response);
 
         // return redirect()->route('static.index');
     }
