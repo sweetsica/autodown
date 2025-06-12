@@ -9,8 +9,9 @@ class StaticPageController extends Controller
 {
     public function forward(Request $request)
     {
-        // $url_forward = 'https://medownloader.com/wp-content/themes/twentysixteen/modules/fbdl.php?url='.$request['url'].'&token=bjvkjkjkajkajakoqo1292318fdvsja';
-            $url_forward = 'https://medownloader.com/wp-content/themes/twentysixteen/modules/fbdl.php?url='.$request['url'];
+        $url_forward = 'https://medownloader.com/wp-content/themes/twentysixteen/modules/fbdl.php?url='.$request['url'].'&token=bjvkjkjkajkajakoqo1292318fdvsja';
+            // $url_forward = 'https://medownloader.com/wp-content/themes/twentysixteen/modules/fbdl.php?url='.$request['url'];
+            //curl -I https://medownloader.com
 
             $response = Http::get($url_forward);
         // $url_hd = $response->json()['links']['Download Video HD'];
