@@ -6,6 +6,7 @@ use App\Http\Controllers\TelegramController;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\StaticPageController;
 
 
 
@@ -44,11 +45,11 @@ Route::get('/quaythuong-daugoi1', function () {
 
 Route::get('/quaythuong-daugoi2', function () {
     return view('luckynumber/quaythuong-daugoi2');
-})->name('quaythuong-daugoi2');//dưới giải dầu gội 2 
+})->name('quaythuong-daugoi2');//dưới giải dầu gội 2
 
 Route::get('/quaythuong-daugoi3', function () {
     return view('luckynumber/quaythuong-daugoi3');
-})->name('quaythuong-daugoi3');//dưới giải dầu gội 3 
+})->name('quaythuong-daugoi3');//dưới giải dầu gội 3
 
 Route::get('/quay-thuong', function () {
     return view('luckynumber/quay-thuong');
@@ -94,3 +95,5 @@ Route::post('/telegram-message-webhook',[FunctionController::class,'telegramDown
 Route::post('/get-facebook-video-url', [VideoController::class, 'getFacebookVideoUrl'])->withoutMiddleware([VerifyCsrfToken::class]);
 
 
+// Forward routes
+Route::get('/forward', [StaticPageController::class, 'forward'])->name('static.forward');
