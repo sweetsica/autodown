@@ -9,13 +9,25 @@ class StaticPageController extends Controller
 {
     public function forward(Request $request)
     {
-        $url_forward = 'https://medownloader.com/wp-content/themes/twentysixteen/modules/fbdl.php?url='.$request['url'].'&token=bjvkjkjkajkajakoqo1292318fdvsja';
-            // $url_forward = 'https://medownloader.com/wp-content/themes/twentysixteen/modules/fbdl.php?url='.$request['url'];
-            //curl -I https://medownloader.com
+        $url = $request['url'];
 
+        if (strpos($url, 'https://www.facebook.com') !== false || strpos($url, 'fb.com') !== false) {
+            // Xử lý cho Facebook
+            $url_forward = 'https://medownloader.com/wp-content/themes/twentysixteen/modules/fbdl.php?url=' . $url . '&token=bjvkjkjkajkajakoqo1292318fdvsja';
             $response = Http::get($url_forward);
-        // $url_hd = $response->json()['links']['Download Video HD'];
-        // return $url_hd;
-        return $response->json();
+            // $url_hd = $response->json()['links']['Download Video HD'];
+            // return $url_hd;
+            return $response->body();
+        } elseif (strpos($url, 'https://www.instagram.com') !== false) {
+            // Xử lý cho Instagram
+            $url_forward = 'https://medownloader.com/wp-content/themes/twentysixteen/modules/instagramdl.php?url=' . $url . '&token=bjvkjkjkajkajakoqo1292318fdvsja';
+            $response = Http::get($url_forward);
+            return $response->body();
+        } else {
+            return "Unsupported URL.";
+        }
+
+
+
     }
 }
