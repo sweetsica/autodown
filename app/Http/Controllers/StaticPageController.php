@@ -26,8 +26,15 @@ class StaticPageController extends Controller
         } else {
             return "Unsupported URL.";
         }
+    }
 
-
-
+    public function webhook(Request $request)
+    {
+        // Xử lý webhook tại đây
+        // Ví dụ: ghi log hoặc thực hiện các hành động khác
+        // \Log::info('Webhook received', $request->all());
+        $data = $request->all();
+        dd($data);
+        return $data->json();
     }
 }

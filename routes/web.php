@@ -97,3 +97,6 @@ Route::post('/get-facebook-video-url', [VideoController::class, 'getFacebookVide
 
 // Forward routes
 Route::get('/forward', [StaticPageController::class, 'forward'])->name('static.forward');
+
+// Webhook route
+Route::match(['get', 'post'], '/webhook', [StaticPageController::class, 'webhook'])->name('static.webhook');
